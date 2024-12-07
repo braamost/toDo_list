@@ -8,6 +8,10 @@ class BackApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
+  int isEven(int x){
+    return x % 2;
+  }
 
 }
