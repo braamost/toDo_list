@@ -10,8 +10,8 @@ class BackApplicationTests {
 	void contextLoads() {
 
 	}
-  int isEven(int x){
-    return x % 2;
+  boolean isEven(int x){
+    return x % 2 == 0;
   }
 
 }
