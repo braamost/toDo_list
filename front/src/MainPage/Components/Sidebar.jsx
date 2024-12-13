@@ -11,7 +11,7 @@ const Sidebar = ({
 }) => {
   return (
     <div
-      className={`bg-white shadow-lg transition-all duration-300 flex ${
+      className={`bg-Pink shadow-lg transition-all duration-300 flex ${
         isSidebar ? "w-64" : "w-16"
       }`}
     >
@@ -22,7 +22,7 @@ const Sidebar = ({
               !isSidebar && "hidden"
             }`}
           >
-            Mail Box
+            Categories
           </h2>
           <button
             onClick={toggleSidebar}
@@ -35,40 +35,30 @@ const Sidebar = ({
         {isSidebar && (
           <div className="space-y-2">
             <SidebarButton
-              icon={Send}
-              label="Compose"
-              onClick={() => navigateSection("compose")}
-              variant="primary"
+              
+              label="home"
+              onClick={() => navigateSection("home")}
+              active={activeSection === "home"}
             />
 
             <nav className="mt-8 space-y-2">
               <SidebarButton
-                icon={Mail}
-                label="Inbox"
-                active={activeSection === "inbox"}
-                onClick={() => navigateSection("inbox")}
+               
+                label="work"
+                active={activeSection === "work"}
+                onClick={() => navigateSection("work")}
               />
 
               <SidebarButton
-                icon={Users}
-                label="Contacts"
-                active={activeSection === "contacts"}
-                onClick={() => navigateSection("contacts")}
+                
+                label="gym"
+                active={activeSection === "gym"}
+                onClick={() => navigateSection("gym")}
               />
 
-              <SidebarButton
-                icon={MessageCircle}
-                label="out Messages"
-                active={activeSection === "out Messages"}
-                onClick={() => navigateSection("out Messages")}
-              />
+            
 
-              <SidebarButton
-                icon={Trash2}
-                label="Trash"
-                active={activeSection === "trash"}
-                onClick={() => navigateSection("trash")}
-              />
+             
             </nav>
 
             <div className="absolute bottom-4 w-56">

@@ -38,21 +38,17 @@ const MainPage = () => {
               <div className="text-gray-600">Your messages will appear here</div>
             </ContentSection>
           )}
-           {activeSection === 'out M' && (
-            <ContentSection title="out Messages" messages={user.out===null? []:user.out}>
+           {activeSection === 'work' && (
+            <ContentSection title="work" messages={user.out===null? []:user.out}>
               <div className="text-gray-600">Your out Messages will appear here</div>
             </ContentSection>
           )}
-          {activeSection === 'contacts' && (
-            <ContentSection title="Contacts" messages={[]}>
+          {activeSection === 'gym' && (
+            <ContentSection title="gym" messages={[]}>
               <div className="text-gray-600">Your contacts will appear here</div>
             </ContentSection>
           )}
-          {activeSection === 'trash' && (
-            <ContentSection title="Trash" messages={user.trash===null? []:user.trash}>
-              <div className="text-gray-600">Deleted messages will appear here</div>
-            </ContentSection>
-          )}
+         
          
         </div>
       </div>

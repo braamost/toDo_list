@@ -1,7 +1,7 @@
 import React, { useState,useContext } from 'react';
 
 import { Datacontext } from '../../main';
-import { Service } from './service';
+
 import axios from 'axios';
 import { RefreshCcw, Trash2 } from 'lucide-react';
 const ContentSection = ({
@@ -54,19 +54,7 @@ const ContentSection = ({
       </button>
       </div>
       </div>
-      <Service 
-        handleClearSearch={handleClearSearch} 
-        onSort={onSort}
-        onFilter={onFilter}
-        handleSearchChange={handleSearchChange}
-        searchPlaceholder={searchPlaceholder}
-        sortLabel={sortLabel}
-        filterLabel={filterLabel}  
-        user={user}
-        setUser={setUser}
-        searchTerm={searchTerm}
-        setSearchTerm={searchTerm}
-        />
+    
       <div>
      
       </div>
