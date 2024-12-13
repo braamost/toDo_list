@@ -1,6 +1,6 @@
 import SidebarButton from "./SidebarButton";
 import React from "react";
-import { Mail, Trash2, Users, LogOut, Send, Menu, X,MessageCircle } from "lucide-react";
+import { Mail, Trash2, Users, LogOut, Send, Menu, X,MessageCircle,PlusIcon,TrashIcon } from "lucide-react";
 
 const Sidebar = ({
   isSidebar,
@@ -11,7 +11,7 @@ const Sidebar = ({
 }) => {
   return (
     <div
-      className={`bg-Pink shadow-lg transition-all duration-300 flex ${
+      className={`bg-white shadow-lg transition-all duration-300 flex ${
         isSidebar ? "w-64" : "w-16"
       }`}
     >
@@ -55,7 +55,48 @@ const Sidebar = ({
                 active={activeSection === "gym"}
                 onClick={() => navigateSection("gym")}
               />
+   <div className="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-row space-y-4">
+  <button 
+    className="
+      bg-green-500 
+      hover:bg-green-600 
+      text-white 
+      p-3 
+      rounded-full 
+      shadow-lg 
+      transition 
+      duration-300 
+      ease-in-out 
+      hover:scale-110 
+      flex 
+      items-center 
+      justify-center
+      flex flex-col space-y-2
+    "
+  >
+    <PlusIcon className="w-6 h-6" />
+  </button>
 
+  <button 
+    className="
+      bg-red-500 
+      hover:bg-red-600 
+      text-white 
+      p-3 
+      rounded-full 
+      shadow-lg 
+      transition 
+      duration-300 
+      ease-in-out 
+      hover:scale-110 
+      flex 
+      items-center 
+      justify-center
+    "
+  >
+    <TrashIcon className="w-6 h-6" />
+  </button>
+</div>
             
 
              
