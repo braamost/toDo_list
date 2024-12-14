@@ -19,7 +19,7 @@ const InputField = ({
         maxLength={ type === 'password' ? 16 : (type === 'tel' ? 20 : 30) }
         value={value}
         onChange={onChange}
-        className="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" 
+        className="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-pink-500 transition-all" 
         placeholder={placeholder}
         required={required}
       />
