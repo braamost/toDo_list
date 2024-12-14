@@ -26,7 +26,6 @@ const LoginPage = () => {
   };
 
 
-
   return (
     <div className="font-sans">
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
