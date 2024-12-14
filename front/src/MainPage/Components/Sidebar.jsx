@@ -55,7 +55,7 @@ const Sidebar = ({
                 active={activeSection === "gym"}
                 onClick={() => navigateSection("gym")}
               />
-   <div className="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-row space-y-4">
+   <div className="min-w-full min-h-full ">
   <button 
     className="
       bg-green-500 
@@ -68,13 +68,12 @@ const Sidebar = ({
       duration-300 
       ease-in-out 
       hover:scale-110 
-      flex 
-      items-center 
-      justify-center
-      flex flex-col space-y-2
+      fixed
+      right-12
+      bottom-20
     "
   >
-    <PlusIcon className="w-6 h-6" />
+    <PlusIcon className="w-full h-full" />
   </button>
 
   <button 
@@ -89,12 +88,12 @@ const Sidebar = ({
       duration-300 
       ease-in-out 
       hover:scale-110 
-      flex 
-      items-center 
-      justify-center
+      fixed
+      left-80
+      bottom-20
     "
   >
-    <TrashIcon className="w-6 h-6" />
+    <TrashIcon className="w-full h-full" />
   </button>
 </div>
             
