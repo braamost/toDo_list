@@ -24,8 +24,16 @@ public class ToDo {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    // Getters and setters...
+    public ToDo() {}
 
+    public ToDo(int todoId, String title, String description, Status status, Date dueDate, Category category) {
+        this.todoId = todoId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.dueDate = dueDate;
+        this.category = category;
+    }
 
     public int getTodoId() {
         return todoId;

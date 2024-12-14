@@ -31,7 +31,25 @@ const SignupPage = () => {
     setErrorMEssage(e => null);
   };
 
- 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMEssage('Passwords do not match');
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:8080/api/user', formData);
+      console.log(response.data);
+      if (response.status === 200) {
+        setErrorMEssage(null);
+        setUser(response.data);
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMEssage(error.response.data.message);
+    }
+  }
 
   return (
     <div className="font-sans">
