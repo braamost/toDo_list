@@ -1,9 +1,13 @@
 package com.toDoList.back.DAO;
 import com.toDoList.back.Entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-    List<Category> findByUsername(String username);
+    @Query("SELECT c FROM Category c WHERE c.user.userId = :userId")
+    List<Category> getCategoriesByUserID(@Param("userId") int userId);
+
 }

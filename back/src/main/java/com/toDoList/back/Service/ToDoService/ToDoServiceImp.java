@@ -16,7 +16,7 @@ public class ToDoServiceImp implements ToDoService {
 
     @Override
     public List<ToDo> findByCategoryId(int categoryId) {
-        return todoRepository.findByCategoryId(categoryId);
+        return todoRepository.findByCategory_CategoryId(categoryId);
     }
     @Override
     public ToDo Save(ToDo toDo) {

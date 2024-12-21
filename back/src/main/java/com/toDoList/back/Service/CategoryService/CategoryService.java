@@ -5,6 +5,6 @@ import com.toDoList.back.Entity.Category;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> findByUsername(String username);
+    List<Category> findByUserId(int userId);
     Category save(Category category);
 }
