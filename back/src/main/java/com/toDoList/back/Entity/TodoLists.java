@@ -5,8 +5,8 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TodoLists")
-public class ToDoLists {
+@Table(name = "Todo_lists")
+public class TodoLists {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
@@ -31,9 +31,9 @@ public class ToDoLists {
     @Column(name = "created_at" , updatable = false)
     private LocalDateTime createdAt;
 
-    public ToDoLists() {}
+    public TodoLists() {}
 
-    public ToDoLists(Integer todoId, Integer categoryId, String title, String content, Status status, Date dueDate) {
+    public TodoLists(Integer todoId, Integer categoryId, String title, String content, Status status, Date dueDate) {
         this.todoId = todoId;
         this.categoryId = categoryId;
         this.title = title;

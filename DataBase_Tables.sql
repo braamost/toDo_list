@@ -25,7 +25,7 @@ CREATE TABLE Categories (
 );
 
 -- Create the TodoLists table
-CREATE TABLE TodoLists (
+CREATE TABLE Todo_lists (
     todo_id INT AUTO_INCREMENT PRIMARY KEY,
     category_id INT NOT NULL,                      -- Foreign key referencing Categories table
     title VARCHAR(255) NOT NULL,
