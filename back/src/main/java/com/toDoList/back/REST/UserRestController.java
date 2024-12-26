@@ -1,10 +1,11 @@
 package com.toDoList.back.REST;
 
 import com.toDoList.back.Entity.User;
+import com.toDoList.back.GlobalHandle.NotFoundException;
+import com.toDoList.back.GlobalHandle.UnauthorizedException;
 import com.toDoList.back.Service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserRestController {
     private final UserService userService;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserRestController(UserService userService , PasswordEncoder passwordEncoder) {
+    public UserRestController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
-    @GetMapping("/{username}/details")
+    @GetMapping("/{username}")
     public User getUserDetails(@PathVariable String username) {
-        return userService.findByUserName(username);
+        User user = userService.findByUserName(username);
+        if(user == null) throw new NotFoundException("User with username " + username + " not found.");
+        return user;
     }
-    @PostMapping("/{username}")
+    @PostMapping
     public User createUser(@RequestBody User user){
         return userService.save(user);
     }
@@ -32,10 +33,10 @@ public class UserRestController {
     public ResponseEntity<User> findByUserName(@PathVariable String userName, @PathVariable String password)throws Exception{
         User user = userService.findByUserName(userName);
         if (user == null) {
-            throw new Exception("User with username " + userName + " not found.");
+            throw new NotFoundException("User with username " + userName + " not found.");
         }
         if(!userService.checkPassword(user, password)) {
-            throw new Exception("Wrong password.");
+            throw new UnauthorizedException("Wrong password.");
         }
         return ResponseEntity.ok(user);
     }

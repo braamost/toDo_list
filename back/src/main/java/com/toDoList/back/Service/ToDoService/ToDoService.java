@@ -1,10 +1,10 @@
 package com.toDoList.back.Service.ToDoService;
 
-import com.toDoList.back.Entity.ToDo;
+import com.toDoList.back.Entity.ToDoLists;
 
 import java.util.List;
 
 public interface ToDoService {
-    List<ToDo> findByCategoryId(int categoryId);
-    ToDo Save(ToDo toDo);
+    List<ToDoLists> findByCategoryId(Integer categoryId);
+    ToDoLists Save(ToDoLists toDo);
 }

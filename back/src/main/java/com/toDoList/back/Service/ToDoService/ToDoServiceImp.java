@@ -1,7 +1,7 @@
 package com.toDoList.back.Service.ToDoService;
 
 import com.toDoList.back.DAO.TodoRepository;
-import com.toDoList.back.Entity.ToDo;
+import com.toDoList.back.Entity.ToDoLists;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -15,12 +15,12 @@ public class ToDoServiceImp implements ToDoService {
 
 
     @Override
-    public List<ToDo> findByCategoryId(int categoryId) {
-        return todoRepository.findByCategory_CategoryId(categoryId);
+    public List<ToDoLists> findByCategoryId(Integer categoryId) {
+        return todoRepository.findByCategoryId(categoryId);
     }
     @Override
-    public ToDo Save(ToDo toDo) {
-        ToDo temp= todoRepository.save(toDo);
+    public ToDoLists Save(ToDoLists toDo) {
+        ToDoLists temp= todoRepository.save(toDo);
         return temp;
     }
 }

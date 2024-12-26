@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-    @Query("SELECT c FROM Category c WHERE c.user.userId = :userId")
-    List<Category> getCategoriesByUserID(@Param("userId") int userId);
-
+    @Query("SELECT c FROM Category c WHERE c.userId = :userId")
+    List<Category> getCategoriesByUserID(@Param("userId") Integer userId);
 }

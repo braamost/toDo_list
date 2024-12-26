@@ -7,19 +7,16 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     private int categoryId;
-
-    @Column(name = "name")
-    private String name;
-
 
     @Column(name = "user_id")
     private int userId;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ToDo> todos;
+    @Column(name = "name")
+    private String name;
 
-    // Getters and setters...
+    public Category() {}
 
     public Category(String name, int userId) {
         this.name = name;
@@ -42,19 +39,12 @@ public class Category {
         this.name = name;
     }
 
-    public int getUser() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUser(int user) {
-        this.userId = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public List<ToDo> getTodos() {
-        return todos;
-    }
-
-    public void setTodos(List<ToDo> todos) {
-        this.todos = todos;
-    }
 }

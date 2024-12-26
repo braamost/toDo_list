@@ -17,7 +17,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public List<Category> findByUserId(int userId){
+    public List<Category> findByUserId(Integer userId){
         return categoryRepository.getCategoriesByUserID(userId);
     }
 

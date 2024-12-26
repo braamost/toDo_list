@@ -1,35 +1,36 @@
-CREATE DATABASE IF NOT EXISTS `todo_list`;
-USE `todo_list`;
+CREATE DATABASE IF NOT EXISTS todo_list;
+USE todo_list;
 
 -- Drop existing tables if they exist
-DROP TABLE IF EXISTS `TodoLists`;
-DROP TABLE IF EXISTS `Categories`;
-DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS TodoLists;
+DROP TABLE IF EXISTS Categories;
+DROP TABLE IF EXISTS Users;
 
+-- Create the Users table to match the User entity
 CREATE TABLE Users (
-	first_name VARCHAR(50) NOT NULL,  
-    second_name VARCHAR(50) NOT NULL,  
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE COLLATE utf8_bin,  -- Case-sensitive collation
-    password_hash VARCHAR(255) NOT NULL,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,         -- Matches @Id and @GeneratedValue(strategy = GenerationType.IDENTITY)
+    first_name VARCHAR(50) NOT NULL,               -- Matches @Column(name = "first_name")
+    last_name VARCHAR(50) NOT NULL,                -- Matches @Column(name = "last_name")
+    username VARCHAR(50) NOT NULL UNIQUE COLLATE utf8_bin,  -- Matches @Column(name = "username"), case-sensitive collation
+    password_hash VARCHAR(255) NOT NULL,           -- Matches @Column(name = "password_hash")
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Matches @Column(name = "created_at")
+);
+
+-- Create the Categories table
+CREATE TABLE Categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,                          -- Foreign key referencing Users table
+    name VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Categories (
-    category_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-);
-
+-- Create the TodoLists table
 CREATE TABLE TodoLists (
     todo_id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT NOT NULL,
+    category_id INT NOT NULL,                      -- Foreign key referencing Categories table
     title VARCHAR(255) NOT NULL,
-    description TEXT,
-    status ENUM('Pending', 'In Progress', 'Completed') DEFAULT 'Pending',
+    content TEXT,
+    status ENUM('PENDING', 'INPROGRESS', 'COMPLETED') DEFAULT 'PENDING',
     due_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES Categories(category_id) ON DELETE CASCADE
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
