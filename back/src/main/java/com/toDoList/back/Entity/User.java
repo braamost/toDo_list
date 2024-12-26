@@ -24,8 +24,7 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Category> categories;
+
 
     @Column(name="created_at")
     private Timestamp createdAt;
@@ -83,13 +82,7 @@ public class User {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-    public List<Category> getCategories() {
-        return categories;
-    }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
     public Timestamp getCreatedAt() {
         return createdAt;
     }

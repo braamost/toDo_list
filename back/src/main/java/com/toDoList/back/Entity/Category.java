@@ -9,16 +9,22 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
 
+    @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+
+    @Column(name = "user_id")
+    private int userId;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ToDo> todos;
 
     // Getters and setters...
+
+    public Category(String name, int userId) {
+        this.name = name;
+        this.userId= userId;
+    }
 
     public int getCategoryId() {
         return categoryId;
@@ -36,12 +42,12 @@ public class Category {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public int getUser() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int user) {
+        this.userId = user;
     }
 
     public List<ToDo> getTodos() {
