@@ -13,7 +13,7 @@ const SignupPage = () => {
     lastName: '',
     username: '',
     mobileNumber: '',
-    password: '',
+    passwordHash: '',
     confirmPassword: ''
   });
 
@@ -33,12 +33,12 @@ const SignupPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.passwordHash !== formData.confirmPassword) {
       setErrorMEssage('Passwords do not match');
       return;
     }
     try {
-      const response = await axios.post('http://localhost:8080/api/user', formData);
+      const response = await axios.post(`http://localhost:8080/api/users/${formData.username}`, formData);
       console.log(response.data);
       if (response.status === 200) {
         setErrorMEssage(null);
@@ -94,7 +94,7 @@ const SignupPage = () => {
               label="Password"
               name="password"
               type="password"
-              value={formData.password}
+              value={formData.passwordHash}
               onChange={handleChange}
               placeholder="Enter password"
             />
