@@ -5,6 +5,7 @@ import Header from './Header';
 import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import { Datacontext } from '../main';
+import { use } from 'react';
 
 
 const SignupPage = () => {
@@ -13,9 +14,10 @@ const SignupPage = () => {
     lastName: '',
     username: '',
     mobileNumber: '',
-    passwordHash: '',
-    confirmPassword: ''
+    password: '',
   });
+
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
   const {user,setUser} =useContext(Datacontext);
@@ -33,17 +35,17 @@ const SignupPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.passwordHash !== formData.confirmPassword) {
+    if (formData.password !== confirmPassword) {
       setErrorMEssage('Passwords do not match');
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:8080/api/users/${formData.username}`, formData);
+      const response = await axios.post(`http://localhost:8080/api/users`, formData);
       console.log(response.data);
       if (response.status === 200) {
         setErrorMEssage(null);
         setUser(response.data);
-        navigate('/login');
+        navigate('/app');
       }
     } catch (error) {
       console.error(error);
@@ -94,7 +96,7 @@ const SignupPage = () => {
               label="Password"
               name="password"
               type="password"
-              value={formData.passwordHash}
+              value={formData.password}
               onChange={handleChange}
               placeholder="Enter password"
             />
@@ -102,8 +104,8 @@ const SignupPage = () => {
               label="Confirm Password"
               name="confirmPassword"
               type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Enter confirm password"
             />
           </div>

@@ -19,7 +19,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User save(User theUser) {
-        theUser.setPasswordHash(passwordEncoder.encode(theUser.getPasswordHash()));
+        theUser.setPassword(passwordEncoder.encode(theUser.getPassword()));
         return userRepository.save(theUser);
     }
 
@@ -30,6 +30,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean checkPassword(User user, String password) {
-        return passwordEncoder.matches(password, user.getPasswordHash());
+        return passwordEncoder.matches(password, user.getPassword());
     }
 }

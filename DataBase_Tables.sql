@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS todo_list;
 USE todo_list;
 
 -- Drop existing tables if they exist
-DROP TABLE IF EXISTS TodoLists;
+DROP TABLE IF EXISTS Todo_lists;
 DROP TABLE IF EXISTS Categories;
 DROP TABLE IF EXISTS Users;
 
@@ -12,7 +12,8 @@ CREATE TABLE Users (
     first_name VARCHAR(50) NOT NULL,               -- Matches @Column(name = "first_name")
     last_name VARCHAR(50) NOT NULL,                -- Matches @Column(name = "last_name")
     username VARCHAR(50) NOT NULL UNIQUE COLLATE utf8_bin,  -- Matches @Column(name = "username"), case-sensitive collation
-    password_hash VARCHAR(255) NOT NULL,           -- Matches @Column(name = "password_hash")
+    mobile_number VARCHAR(20) DEFAULT NULL,
+    password VARCHAR(255) NOT NULL,           -- Matches @Column(name = "password_hash")
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Matches @Column(name = "created_at")
 );
 

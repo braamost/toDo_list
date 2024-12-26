@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 import { LoginIllustration } from './LoginIllustration';
 import { Datacontext } from '../main';
+import { CodeSquare } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,23 @@ const LoginPage = () => {
     setErrorMEssage(e => null);
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(formData);
+      const response = await axios.post("http://localhost:8080/api/users/login", formData);
+      console.log(response.data);
+      if (response.status === 200) {
+        setErrorMEssage(null);
+        setUser(response.data);
+        navigate('/main page');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMEssage(error.response.data.message);
+    }
+  }
+
 
   return (
     <div className="font-sans">
@@ -33,7 +51,7 @@ const LoginPage = () => {
           <LoginForm 
             formData={formData}
             onInputChange={handleInputChange}
-            
+            onSubmit={onSubmit}
             error={ErrorMessage}
             
           />

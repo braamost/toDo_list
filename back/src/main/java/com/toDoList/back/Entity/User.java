@@ -2,7 +2,6 @@ package com.toDoList.back.Entity;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -10,7 +9,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -21,19 +20,23 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password_hash")
-    private String passwordHash;
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name="created_at")
     private Timestamp createdAt;
 
     public User() {}
 
-    public User(String firstName, String lastName, String username, String passwordHash) {
+    public User(String firstName, String lastName, String username, String password, String mobileNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
+        this.mobileNumber = mobileNumber;
     }
 
     @PrePersist
@@ -57,11 +60,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -73,12 +76,20 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public Timestamp getCreatedAt() {
