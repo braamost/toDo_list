@@ -5,7 +5,7 @@ const SubmitButton = ({ children = 'Sign up',error }) => {
     <div className="mt-8">
       <button 
         type="submit" 
-        className="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+        className="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none"
       >
         {children}
       </button>

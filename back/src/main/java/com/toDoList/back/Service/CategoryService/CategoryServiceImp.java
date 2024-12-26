@@ -13,8 +13,8 @@ public class CategoryServiceImp {
         this.categoryRepository = categoryRepository;
     }
 
-    List<Category> findByUsername(String username){
-        return categoryRepository.findByUsername(username);
+    List<Category> findByUserId(int userId){
+        return categoryRepository.getCategoriesByUserID(userId);
     }
 
     Category save(Category category){
