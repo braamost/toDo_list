@@ -34,17 +34,20 @@ const LoginPage = () => {
       console.log(response.data);
       if (response.status === 200) {
         setErrorMEssage(null);
-        setUser(response.data);
-        const data = fetchData(response.data.username);
-        console.log(data);
+        setUser(s=>response.data)
+        const data = fetchData(response.data,setUser);
+        setUser(s=>data)
+        console.log(user)
+        console.log(data.data);
         navigate('/main page');
       }
     } catch (error) {
       console.error(error);
       setErrorMEssage(error.response.data.message);
     }
+   
   }
-
+ 
 
   return (
     <div className="font-sans">
