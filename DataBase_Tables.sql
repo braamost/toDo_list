@@ -28,10 +28,11 @@ CREATE TABLE Categories (
 -- Create the TodoLists table
 CREATE TABLE Todo_lists (
     todo_id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT NOT NULL,                      -- Foreign key referencing Categories table
+    category_id INT NOT NULL,                     -- Foreign key referencing Categories table
     title VARCHAR(255) NOT NULL,
     content TEXT,
     status ENUM('PENDING', 'INPROGRESS', 'COMPLETED') DEFAULT 'PENDING',
-    due_date DATE,
+    due_date TIMESTAMP,
+    importance ENUM('HIGH','MEDIUM','LOW') default 'MEDIUM',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

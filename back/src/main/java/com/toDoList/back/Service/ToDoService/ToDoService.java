@@ -7,4 +7,5 @@ import java.util.List;
 public interface ToDoService {
     List<TodoLists> findByCategoryId(Integer categoryId);
     TodoLists Save(TodoLists toDo);
+    void delete(Integer todoId);
 }

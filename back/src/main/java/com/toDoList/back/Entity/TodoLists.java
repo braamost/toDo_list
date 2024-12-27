@@ -26,20 +26,25 @@ public class TodoLists {
     private Status status = Status.PENDING;
 
     @Column(name = "due_date")
-    private Date dueDate;
+    private LocalDateTime dueDate;
+
+    @Column(name = "importance")
+    @Enumerated(EnumType.STRING)
+    private Importance importance = Importance.MEDIUM;
 
     @Column(name = "created_at" , updatable = false)
     private LocalDateTime createdAt;
 
     public TodoLists() {}
 
-    public TodoLists(Integer todoId, Integer categoryId, String title, String content, Status status, Date dueDate) {
+    public TodoLists(Integer todoId, Integer categoryId, String title, String content, Status status, LocalDateTime dueDate, Importance importance) {
         this.todoId = todoId;
         this.categoryId = categoryId;
         this.title = title;
         this.content = content;
         this.status = status;
         this.dueDate = dueDate;
+        this.importance = importance;
     }
 
     @PrePersist
@@ -81,11 +86,11 @@ public class TodoLists {
         this.status = status;
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -101,9 +106,22 @@ public class TodoLists {
         return createdAt;
     }
 
+    public Importance getImportance() {
+        return importance;
+    }
+
+    public void setImportance(Importance importance) {
+        this.importance = importance;
+    }
+
     public enum Status {
         PENDING,
         INPROGRESS,
         COMPLETED
+    }
+    public enum Importance {
+        HIGH,
+        MEDIUM,
+        LOW
     }
 }
