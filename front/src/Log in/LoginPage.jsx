@@ -36,7 +36,7 @@ const LoginPage = () => {
         setErrorMEssage(null);
         setUser(s=>response.data)
         const data = fetchData(response.data,setUser);
-        setUser(s=>data)
+        //setUser(s=>data)
         console.log(user)
         console.log(data.data);
         navigate('/main page');
