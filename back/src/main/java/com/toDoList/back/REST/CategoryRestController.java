@@ -1,9 +1,11 @@
 package com.toDoList.back.REST;
 
 import com.toDoList.back.Entity.Category;
+import com.toDoList.back.Entity.TodoLists;
 import com.toDoList.back.Entity.User;
 import com.toDoList.back.GlobalHandle.AlreadyExistsException;
 import com.toDoList.back.Service.CategoryService.CategoryService;
+import com.toDoList.back.Service.ToDoService.ToDoService;
 import com.toDoList.back.Service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,13 @@ public class CategoryRestController {
 
     private final CategoryService categoryService;
     private final UserService userService;
+    private final ToDoService toDoService;
 
     @Autowired
-    public CategoryRestController(CategoryService categoryService , UserService userService) {
+    public CategoryRestController(CategoryService categoryService , UserService userService, ToDoService toDoService) {
         this.categoryService = categoryService;
         this.userService= userService;
+        this.toDoService = toDoService;
     }
 
     // Get all categories for a specific user
@@ -42,6 +46,10 @@ public class CategoryRestController {
     }
     @DeleteMapping("/{categoryId}")
     public void deleteCategory(@PathVariable Integer categoryId) {
+        List<TodoLists> todos = toDoService.findByCategoryId(categoryId);
+        for (TodoLists todo : todos) {
+            toDoService.delete(todo.getTodoId());
+        }
         categoryService.delete(categoryId);
     }
 }

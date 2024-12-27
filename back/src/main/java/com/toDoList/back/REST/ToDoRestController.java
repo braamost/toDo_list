@@ -39,15 +39,6 @@ public class ToDoRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/deleteCategory/{categoryId}")
-    public ResponseEntity<Void> deleteByCategoryId(@PathVariable Integer categoryId) {
-        List<TodoLists> todos = todoService.findByCategoryId(categoryId);
-        for (TodoLists todo : todos) {
-            todoService.delete(todo.getTodoId());
-        }
-        return ResponseEntity.noContent().build();
-    }
-
     @PutMapping("/{todoId}")
     public ResponseEntity<TodoLists> update(@PathVariable Integer todoId, @RequestBody TodoLists toDo) {
         toDo.setTodoId(todoId);
