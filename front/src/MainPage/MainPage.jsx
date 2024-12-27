@@ -38,9 +38,8 @@ const MainPage = () => {
               <div className="text-gray-600">Your messages will appear here</div>
             </ContentSection>
           )}
-          {
-            
-          }
+          
+          
         
          
          

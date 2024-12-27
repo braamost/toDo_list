@@ -34,20 +34,20 @@ const LoginPage = () => {
       console.log(response.data);
       if (response.status === 200) {
         setErrorMEssage(null);
-        setUser(response.data);
-        const data = fetchData(response.data.username);
-        console.log(data);
+        setUser(s=>response.data)
+        const data = fetchData(response.data,setUser);
+        setUser(s=>data)
+        console.log(user)
+        console.log(data.data);
         navigate('/main page');
       }
     } catch (error) {
       console.error(error);
       setErrorMEssage(error.response.data.message);
     }
-    handlePageLoad();
+   
   }
-  handlePageLoad=async()=>{
-    const response = await axios.post("http://localhost:8080/api/users/login", formData);
-  }
+ 
 
   return (
     <div className="font-sans">

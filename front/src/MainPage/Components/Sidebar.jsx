@@ -5,7 +5,7 @@ import { Mail, Trash2, Users, LogOut, Send, Menu, X, MessageCircle, PlusIcon, Tr
 import PlusButton from "./Button";
 import { use } from "react";
 import axios from "axios";
-
+import { fetchData } from "../../Fetch/Fetch";
 const Sidebar = ({
   isSidebar,
   toggleSidebar,
@@ -13,7 +13,7 @@ const Sidebar = ({
   navigateSection,
   onLogout,
 }) => {
-  const {user}=useContext(Datacontext) 
+  const {user,setUser}=useContext(Datacontext) 
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState('');
 
@@ -30,7 +30,7 @@ const Sidebar = ({
       setNewCategory('');
       setIsAddingCategory(false);
     }
-    
+    fetchData(user,setUser); 
   };
 
   return (
@@ -91,12 +91,14 @@ const Sidebar = ({
               onClick={() => navigateSection("home")}
               active={activeSection === "home"}
             />
-            {user.categories&&user.categories.map( <SidebarButton
-              label={user.categories.name}
-              onClick={() => navigateSection(user.categories.name)}
-              active={activeSection === user.categories.name}
-            />
-            )}
+            {user.categories && user.categories.map(category => (
+  <SidebarButton
+    key={category.name}
+    label={category.name}
+    onClick={() => navigateSection(category.name)}
+    active={activeSection === category.name}
+  />
+))}
             <nav className="mt-8 space-y-2">
              
 
