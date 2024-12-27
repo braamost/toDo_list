@@ -38,7 +38,15 @@ const MainPage = () => {
               <div className="text-gray-600">Your messages will appear here</div>
             </ContentSection>
           )}
-          
+          {user.categories && user.categories.map((c) => (
+  activeSection===c.name&&<ContentSection 
+    key={c.id} // Add a key prop
+    title={c.name} 
+    messages={c.tasks ===null?[]:c.tasks} // Use nullish coalescing
+  >
+    <div className="text-gray-600">Your messages will appear here</div>  
+  </ContentSection>
+))}
           
         
          
