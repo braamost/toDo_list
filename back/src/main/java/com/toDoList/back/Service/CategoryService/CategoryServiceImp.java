@@ -1,7 +1,9 @@
 package com.toDoList.back.Service.CategoryService;
 
 import com.toDoList.back.DAO.CategoryRepository;
+import com.toDoList.back.DAO.TodoRepository;
 import com.toDoList.back.Entity.Category;
+import com.toDoList.back.Entity.TodoLists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +12,21 @@ import java.util.List;
 @Service
 public class CategoryServiceImp implements CategoryService {
     private final CategoryRepository categoryRepository;
-
+    private final TodoRepository todoRepository;
     @Autowired
-    public CategoryServiceImp(CategoryRepository categoryRepository){
+    public CategoryServiceImp(CategoryRepository categoryRepository , TodoRepository todoRepository){
         this.categoryRepository = categoryRepository;
+        this.todoRepository = todoRepository;
     }
 
     @Override
     public List<Category> findByUserId(Integer userId){
-        return categoryRepository.getCategoriesByUserID(userId);
+        List<Category>  categories = categoryRepository.getCategoriesByUserID(userId);
+        for(Category category : categories){
+            List<TodoLists> tasks = todoRepository.findByCategoryId(category.getCategoryId());
+            category.setTasks(tasks);
+        }
+         return categories ;
     }
 
     @Override
