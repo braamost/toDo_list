@@ -1,7 +1,10 @@
 import SidebarButton from "./SidebarButton";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { Datacontext } from "../../main";
 import { Mail, Trash2, Users, LogOut, Send, Menu, X, MessageCircle, PlusIcon, TrashIcon, PlusCircle } from "lucide-react";
 import PlusButton from "./Button";
+import { use } from "react";
+import axios from "axios";
 
 const Sidebar = ({
   isSidebar,
@@ -10,17 +13,24 @@ const Sidebar = ({
   navigateSection,
   onLogout,
 }) => {
+  const {user}=useContext(Datacontext) 
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState('');
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
+    console.log(user)
     if (newCategory.trim()) {
+      const response = await axios.post("http://localhost:8080/api/categories", {
+            "name":newCategory,
+            "userId":user.userId         
+      }).then(content=>console.log(content.data));
       // TODO: Implement category addition logic
       console.log('Adding new category:', newCategory);
       // You might want to pass this to a parent component or a state management system
       setNewCategory('');
       setIsAddingCategory(false);
     }
+    
   };
 
   return (
@@ -83,16 +93,7 @@ const Sidebar = ({
             />
 
             <nav className="mt-8 space-y-2">
-              <SidebarButton
-                label="work"
-                active={activeSection === "work"}
-                onClick={() => navigateSection("work")}
-              />
-              <SidebarButton
-                label="gym"
-                active={activeSection === "gym"}
-                onClick={() => navigateSection("gym")}
-              />
+             
 
               <div className="min-w-full min-h-full ">
                 <PlusButton></PlusButton>

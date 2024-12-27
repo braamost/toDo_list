@@ -23,11 +23,6 @@ const router = createBrowserRouter([
 
 function Main() {
   const [user, setUser] = useState({
-    in: [],
-    out: [],
-    password: "",
-    email: "",
-    trash: [],
   });
   return (
     <StrictMode>
