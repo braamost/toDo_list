@@ -1,11 +1,15 @@
 import axios from "axios";
-export async function fetchData(user,setUser) {
-  console.log(user.username + "the sended user name");
-  const response = await axios.get(`http://localhost:8080/api/categories/${user.
-username
-}`);
-  setUser(s=>({
-    ...s,
-    categories: response.data
-  }));
+
+export async function fetchData(user, setUser) {
+  try {
+    console.log(`Fetching data for user: ${user.username}`);
+    const response = await axios.get(`http://localhost:8080/api/categories/${user.username}`);
+    setUser(prevUser => ({
+      ...prevUser,
+      categories: response.data
+    }));
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
 }

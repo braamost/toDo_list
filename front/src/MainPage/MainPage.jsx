@@ -34,14 +34,15 @@ const MainPage = () => {
       <div className="flex-1 p-8">
         <div className="bg-white rounded-lg shadow-md p-6 min-h-[calc(100vh-4rem)]">
           {activeSection === 'home' && (
-            <ContentSection title="home" messages={user.in===null? []:user.in}>
+            <ContentSection title="home" key ={0} messages={user.in===null? []:user.in}>
               <div className="text-gray-600">Your messages will appear here</div>
             </ContentSection>
           )}
           {user.categories && user.categories.map((c) => (
   activeSection===c.name&&<ContentSection 
-    key={c.id} // Add a key prop
+    key={c.categoryId} // Add a key prop
     title={c.name} 
+    category={c}
     messages={c.tasks ===null?[]:c.tasks} // Use nullish coalescing
   >
     <div className="text-gray-600">Your messages will appear here</div>  

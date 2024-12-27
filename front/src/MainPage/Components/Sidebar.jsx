@@ -93,7 +93,7 @@ const Sidebar = ({
             />
             {user.categories && user.categories.map(category => (
   <SidebarButton
-    key={category.name}
+    key={category.categoryId}
     label={category.name}
     onClick={() => navigateSection(category.name)}
     active={activeSection === category.name}

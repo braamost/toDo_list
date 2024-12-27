@@ -1,38 +1,31 @@
 import React, { useState,useContext } from 'react';
-
 import { Datacontext } from '../../main';
-
+import { fetchData } from '../../Fetch/Fetch';
 import axios from 'axios';
 import { RefreshCcw, Trash2 } from 'lucide-react';
+import { deleteCategory } from '../../Delete/DeleteCategories';
+
+
 const ContentSection = ({
    title,
-   children,
-   onSearch,
-   onSort,
-   onFilter,
-   searchPlaceholder = "Search...",
-   sortLabel = "Sort",
-   filterLabel = "Filter",
+   category,
    messages=[]
 }) => {
 
   const {user,setUser} =useContext(Datacontext);
-  const [searchTerm, setSearchTerm] = useState('');
   
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    onSearch && onSearch(value);
-    console.log(user);
+  const handleDelete = async (e) => {
+    try {
+      console.log('Deleting category:', title);
+      console.log('Category ID:', category.categoryId);
+      
+      await deleteCategory(category.categoryId);
+      await fetchData(user, setUser);
+    } catch (error) {
+      console.error('Error in handleDelete:', error);
+      // You might want to show an error message to the user here
+    }
   };
-
-  const handleClearSearch = () => {
-    setSearchTerm('');
-    onSearch && onSearch('');
-  };
-
- 
-
   return (
     <div>
       <div className='flex items-center text-gray-500 font-medium text-sm justify-between space-x-2'>
@@ -48,7 +41,7 @@ const ContentSection = ({
       </button>
       <button
           className="text-gray-800 font-bold py-2 px-4 rounded flex items-center transition-all duration-300 ease-in-out transform hover:scale-110 hover:text-red-500"
-          
+          onClick={handleDelete}
       >
           <Trash2 className="mr-2" size={18} />
       </button>
