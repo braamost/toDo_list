@@ -1,38 +1,38 @@
 import React, { useState,useContext } from 'react';
 import MyTasks from './Table.jsx';
 import { Datacontext } from '../../main';
-
-import axios from 'axios';
-import { RefreshCcw, Trash2 } from 'lucide-react';
-const ContentSection = ({
-   title,
-   children,
-   onSearch,
-   onSort,
-   onFilter,
-   searchPlaceholder = "Search...",
-   sortLabel = "Sort",
-   filterLabel = "Filter",
-   messages=[]
-}) => {
+import { fetchData } from "../../Fetch/Fetch";
+import axios from "axios";
+import {
+  Mail,
+  Trash2,
+  Users,
+  LogOut,
+  Send,
+  Menu,
+  X,
+  MessageCircle,
+  PlusIcon,
+  TrashIcon,
+  PlusCircle,
+  RefreshCcw,
+} from "lucide-react";
+import TaskAdding from "./composeTask";
+import { deleteCategory } from "../../Delete/DeleteCategories";
+const ContentSection = ({ title, category, messages = [] }) => {
 
   const {user,setUser} =useContext(Datacontext);
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    onSearch && onSearch(value);
-    console.log(user);
-  };
+  const handleDelete = async (e) => {
+    try {
+      console.log("Deleting category:", title);
+      console.log("Category ID:", category.categoryId);
 
-  const handleClearSearch = () => {
-    setSearchTerm('');
-    onSearch && onSearch('');
-  };
-
- 
-
+      await deleteCategory(category.categoryId);
+      await fetchData(user, setUser);
+    } catch (error) {
+      console.error("Error in handleDelete:", error);
+      // You might want to show an error message to the user here
+    }};
   return (
     <>
 

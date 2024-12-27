@@ -32,4 +32,17 @@ public class ToDoRestController {
         TodoLists savedTodo = todoService.Save(toDo);
         return ResponseEntity.ok(savedTodo);
     }
+
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<Void> delete(@PathVariable Integer todoId) {
+        todoService.delete(todoId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{todoId}")
+    public ResponseEntity<TodoLists> update(@PathVariable Integer todoId, @RequestBody TodoLists toDo) {
+        toDo.setTodoId(todoId);
+        TodoLists updatedTodo = todoService.Save(toDo);
+        return ResponseEntity.ok(updatedTodo);
+    }
 }

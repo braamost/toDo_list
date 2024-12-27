@@ -13,24 +13,35 @@ import java.util.List;
 public class CategoryServiceImp implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final TodoRepository todoRepository;
+
     @Autowired
-    public CategoryServiceImp(CategoryRepository categoryRepository , TodoRepository todoRepository){
+    public CategoryServiceImp(CategoryRepository categoryRepository , TodoRepository todoRepository) {
         this.categoryRepository = categoryRepository;
-        this.todoRepository = todoRepository;
+        this.todoRepository=todoRepository;
     }
 
     @Override
     public List<Category> findByUserId(Integer userId){
-        List<Category>  categories = categoryRepository.getCategoriesByUserID(userId);
+        List<Category>  categories = categoryRepository.findByUserIdAndName(userId);
         for(Category category : categories){
             List<TodoLists> tasks = todoRepository.findByCategoryId(category.getCategoryId());
             category.setTasks(tasks);
         }
-         return categories ;
+        return categories ;
     }
 
     @Override
     public Category save(Category category){
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public void delete(Integer categoryID) {
+        categoryRepository.deleteById(categoryID);
+    }
+
+    @Override
+    public List<Category> findByUserIdAndName(Integer userId, String name) {
+        return categoryRepository.findByUserIdAndName(userId, name);
     }
 }

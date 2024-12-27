@@ -50,8 +50,6 @@ public class User {
         this.categories = categories;
     }
 
-
-
     @PrePersist
     public void prePersist() {
         createdAt = new Timestamp(System.currentTimeMillis());

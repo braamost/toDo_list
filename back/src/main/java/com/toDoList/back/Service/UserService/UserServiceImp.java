@@ -16,15 +16,11 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private CategoryRepository categoryRepository;
-    private TodoRepository todoRepository;
 
     @Autowired
-    public UserServiceImp(UserRepository theuserRepository , PasswordEncoder thepasswordEncoder , CategoryRepository categoryRepository , TodoRepository todo){
+    public UserServiceImp(UserRepository theuserRepository , PasswordEncoder thepasswordEncoder){
         this.userRepository = theuserRepository;
         this.passwordEncoder = thepasswordEncoder;
-        this.categoryRepository=categoryRepository;
-        this.todoRepository=todo;
     }
 
     @Override
@@ -41,16 +37,5 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean checkPassword(User user, String password) {
         return passwordEncoder.matches(password, user.getPassword());
-    }
-
-    @Override
-    public User GetAllDetails(User user) {
-        List<Category> categories = categoryRepository.getCategoriesByUserID(user.getUserId());
-        for(Category category : categories){
-            List<TodoLists> tasks = todoRepository.findByCategoryId(category.getCategoryId());
-            category.setTasks(tasks);
-        }
-        user.setCategories(categories);
-        return user;
     }
 }
