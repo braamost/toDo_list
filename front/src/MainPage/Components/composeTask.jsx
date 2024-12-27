@@ -4,12 +4,12 @@ import axios from 'axios';
 import { fetchData } from '../../Fetch/Fetch';
 import { Datacontext } from '../../main';
 
-const PlusButton = ({category}) => {
+const taskAdding = ({category}) => {
   const {user,setUser}=useContext(Datacontext);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [content, setDescription] = useState('');
-  const [importance, setImportance] = useState('medium');
+  const [importance, setImportance] = useState('MEDIUM');
   const [dueDate, setDueDate] = useState('');
   const [dueTime, setDueTime] = useState('');
   const [errors, setErrors] = useState({});
@@ -25,7 +25,7 @@ const PlusButton = ({category}) => {
     setDueDate('');
     setInputValue('');
     setDescription('');
-    setImportance('medium');
+    setImportance('MEDIUM');
  
     setErrors({});
   };
@@ -48,17 +48,19 @@ const PlusButton = ({category}) => {
   const handleSubmit = () => {
     console.log(category.name);
     if (validateForm()) {
+      const combinedDateTime = `${dueDate}T${dueTime}`; 
       const dto={
         title: inputValue,
-        content,
-        importance,
-        dueDate,
-        dueTime,
-        categoryId:category.id
+        categoryId: category.categoryId,
+        content: content,
+        status: "PENDING",
+        importance: importance,
+        dueDate: combinedDateTime
       };
       console.log(dto);
       toggleDialog();
-      response=axios.post("http://localhost:8080/api/todo",dto);
+      const response=axios.post("http://localhost:8080/api/todo",dto);
+      console.log("no error", response);
     }
     fetchData(user,setUser);
     console.log(user);
@@ -169,7 +171,7 @@ const PlusButton = ({category}) => {
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Importance</label>
               <div className="flex gap-2">
-                {['low', 'medium', 'high'].map((level) => (
+                {['LOW', 'MEDIUM', 'HIGH'].map((level) => (
                   <button
                     key={level}
                     onClick={() => setImportance(level)}
@@ -206,4 +208,4 @@ const PlusButton = ({category}) => {
   );
 };
 
-export default PlusButton;
+export default taskAdding;

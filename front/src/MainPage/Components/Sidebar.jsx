@@ -1,8 +1,19 @@
 import SidebarButton from "./SidebarButton";
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Datacontext } from "../../main";
-import { Mail, Trash2, Users, LogOut, Send, Menu, X, MessageCircle, PlusIcon, TrashIcon, PlusCircle } from "lucide-react";
-import PlusButton from "./Button";
+import {
+  Mail,
+  Trash2,
+  Users,
+  LogOut,
+  Send,
+  Menu,
+  X,
+  MessageCircle,
+  PlusIcon,
+  TrashIcon,
+  PlusCircle,
+} from "lucide-react";
 import { use } from "react";
 import axios from "axios";
 import { fetchData } from "../../Fetch/Fetch";
@@ -13,24 +24,26 @@ const Sidebar = ({
   navigateSection,
   onLogout,
 }) => {
-  const {user,setUser}=useContext(Datacontext) 
+  const { user, setUser } = useContext(Datacontext);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
 
   const handleAddCategory = async () => {
-    console.log(user)
+    console.log(user);
     if (newCategory.trim()) {
-      const response = await axios.post("http://localhost:8080/api/categories", {
-            "name":newCategory,
-            "userId":user.userId         
-      }).then(content=>console.log(content.data));
+      const response = await axios
+        .post("http://localhost:8080/api/categories", {
+          name: newCategory,
+          userId: user.userId,
+        })
+        .then((content) => console.log(content.data));
       // TODO: Implement category addition logic
-      console.log('Adding new category:', newCategory);
+      console.log("Adding new category:", newCategory);
       // You might want to pass this to a parent component or a state management system
-      setNewCategory('');
+      setNewCategory("");
       setIsAddingCategory(false);
     }
-    fetchData(user,setUser); 
+    fetchData(user, setUser);
   };
 
   return (
@@ -86,46 +99,15 @@ const Sidebar = ({
 
         {isSidebar && (
           <div className="space-y-2">
-            <SidebarButton
-              label="home"
-              onClick={() => navigateSection("home")}
-              active={activeSection === "home"}
-            />
-            {user.categories && user.categories.map(category => (
-  <SidebarButton
-    key={category.categoryId}
-    label={category.name}
-    onClick={() => navigateSection(category.name)}
-    active={activeSection === category.name}
-  />
-))}
-            <nav className="mt-8 space-y-2">
-             
-
-              <div className="min-w-full min-h-full ">
-                <PlusButton></PlusButton>
-                <button
-                  className="
-                    bg-red-500
-                    hover:bg-red-600
-                    text-white
-                    p-3
-                    rounded-full
-                    shadow-lg
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:scale-110
-                    fixed
-                    left-80
-                    bottom-20
-                  "
-                >
-                  <TrashIcon className="w-full h-full" />
-                </button>
-              </div>
-            </nav>
-
+            {user.categories &&
+              user.categories.map((category) => (
+                <SidebarButton
+                  key={category.categoryId}
+                  label={category.name}
+                  onClick={() => navigateSection(category.name)}
+                  active={activeSection === category.name}
+                />
+              ))}
             <div className="absolute bottom-4 w-56">
               <SidebarButton
                 icon={LogOut}
