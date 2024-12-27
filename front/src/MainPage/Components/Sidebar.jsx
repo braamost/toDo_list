@@ -91,7 +91,12 @@ const Sidebar = ({
               onClick={() => navigateSection("home")}
               active={activeSection === "home"}
             />
-
+            {user.categories&&user.categories.map( <SidebarButton
+              label={user.categories.name}
+              onClick={() => navigateSection(user.categories.name)}
+              active={activeSection === user.categories.name}
+            />
+            )}
             <nav className="mt-8 space-y-2">
              
 

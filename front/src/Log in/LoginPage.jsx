@@ -41,8 +41,11 @@ const LoginPage = () => {
       console.error(error);
       setErrorMEssage(error.response.data.message);
     }
+    handlePageLoad();
   }
-
+  handlePageLoad=async()=>{
+    const response = await axios.post("http://localhost:8080/api/users/login", formData);
+  }
 
   return (
     <div className="font-sans">
