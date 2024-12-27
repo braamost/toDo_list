@@ -7,19 +7,56 @@ const PlusButton = () => {
   const [importance, setImportance] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [dueTime, setDueTime] = useState('');
+  const [errors, setErrors] = useState({});
 
   const toggleDialog = () => {
     setIsOpen(!isOpen);
+    setDueTime('');
+    setDueDate('');
+    setInputValue('');
+    setImportance('medium');
+    setErrors({});
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!inputValue.trim()) {
+      newErrors.task = 'Task is required';
+    }
+    
+    if (!dueDate) {
+      newErrors.dueDate = 'Due date is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
-    console.log('Submitted:', {
-      text: inputValue,
-      importance,
-      dueDate,
-      dueTime
-    });
-    toggleDialog();
+    if (validateForm()) {
+      console.log('Submitted:', {
+        text: inputValue,
+        importance,
+        dueDate,
+        dueTime
+      });
+      toggleDialog();
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    if (errors.task) {
+      setErrors(prev => ({ ...prev, task: '' }));
+    }
+  };
+
+  const handleDateChange = (e) => {
+    setDueDate(e.target.value);
+    if (errors.dueDate) {
+      setErrors(prev => ({ ...prev, dueDate: '' }));
+    }
   };
 
   const getImportanceColor = () => {
@@ -30,8 +67,6 @@ const PlusButton = () => {
     };
     return colors[importance];
   };
-
-  
 
   return (
     <div>
@@ -61,25 +96,37 @@ const PlusButton = () => {
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
             <h2 className="text-xl font-bold mb-4 text-pink-600">Add New Task</h2>
             
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Enter new task"
-              className="w-full p-2 border rounded mb-4 text-gray-700"
-            />
-
-            
+            <div className="mb-4">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Enter new task *"
+                className={`w-full p-2 border rounded text-gray-700 ${
+                  errors.task ? 'border-red-500' : ''
+                }`}
+              />
+              {errors.task && (
+                <p className="text-red-500 text-sm mt-1">{errors.task}</p>
+              )}
+            </div>
 
             <div className="flex gap-4 mb-4">
               <div className="flex-1">
-                <label className="block text-gray-700 mb-2">Due Date</label>
+                <label className="block text-gray-700 mb-2">
+                  Due Date <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="date"
                   value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full p-2 border rounded text-gray-700"
+                  onChange={handleDateChange}
+                  className={`w-full p-2 border rounded text-gray-700 ${
+                    errors.dueDate ? 'border-red-500' : ''
+                  }`}
                 />
+                {errors.dueDate && (
+                  <p className="text-red-500 text-sm mt-1">{errors.dueDate}</p>
+                )}
               </div>
               <div className="flex-1">
                 <label className="block text-gray-700 mb-2">Due Time</label>
