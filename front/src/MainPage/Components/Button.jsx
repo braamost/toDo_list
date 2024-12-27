@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import { PlusIcon, Clock, Tag } from 'lucide-react';
+import { PlusIcon, X } from 'lucide-react';
 
 const PlusButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [description, setDescription] = useState('');
   const [importance, setImportance] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [dueTime, setDueTime] = useState('');
   const [errors, setErrors] = useState({});
+
+ 
+
+ 
 
   const toggleDialog = () => {
     setIsOpen(!isOpen);
     setDueTime('');
     setDueDate('');
     setInputValue('');
+    setDescription('');
     setImportance('medium');
+ 
     setErrors({});
   };
 
@@ -36,7 +43,8 @@ const PlusButton = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       console.log('Submitted:', {
-        text: inputValue,
+        content: inputValue,
+        description,
         importance,
         dueDate,
         dueTime
@@ -72,28 +80,14 @@ const PlusButton = () => {
     <div>
       <button
         onClick={toggleDialog}
-        className="
-          bg-green-500
-          hover:bg-green-600
-          text-white
-          p-3
-          rounded-full
-          shadow-lg
-          transition
-          duration-300
-          ease-in-out
-          hover:scale-110
-          fixed
-          right-12
-          bottom-20
-        "
+        className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110 fixed right-12 bottom-20"
       >
         <PlusIcon className="w-6 h-6" />
       </button>
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-pink-600">Add New Task</h2>
             
             <div className="mb-4">
@@ -101,7 +95,7 @@ const PlusButton = () => {
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="Enter new task *"
+                placeholder="Enter task title *"
                 className={`w-full p-2 border rounded text-gray-700 ${
                   errors.task ? 'border-red-500' : ''
                 }`}
@@ -110,6 +104,20 @@ const PlusButton = () => {
                 <p className="text-red-500 text-sm mt-1">{errors.task}</p>
               )}
             </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Description</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Add task description..."
+                className="w-full p-2 border rounded text-gray-700 h-24 resize-none"
+              />
+            </div>
+
+            
+
+            
 
             <div className="flex gap-4 mb-4">
               <div className="flex-1">
@@ -130,12 +138,21 @@ const PlusButton = () => {
               </div>
               <div className="flex-1">
                 <label className="block text-gray-700 mb-2">Due Time</label>
-                <input
-                  type="time"
-                  value={dueTime}
-                  onChange={(e) => setDueTime(e.target.value)}
-                  className="w-full p-2 border rounded text-gray-700"
-                />
+                <div className="relative">
+                  <input
+                    type="time"
+                    value={dueTime}
+                    onChange={(e) => setDueTime(e.target.value)}
+                    className="w-full p-2 border rounded text-gray-700"
+                  />
+                  {dueTime && (
+                    <button
+                      onClick={() => setDueTime('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
