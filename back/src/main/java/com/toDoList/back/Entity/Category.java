@@ -23,6 +23,18 @@ public class Category {
         this.userId= userId;
     }
 
+    public List<TodoLists> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TodoLists> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Transient
+    private List<TodoLists> tasks;
+
+
     public int getCategoryId() {
         return categoryId;
     }
