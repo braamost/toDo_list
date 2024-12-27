@@ -24,4 +24,9 @@ public class ToDoServiceImp implements ToDoService {
     public TodoLists Save(TodoLists toDo) {
         return todoRepository.save(toDo);
     }
+
+    @Override
+    public void delete(Integer todoId) {
+        todoRepository.deleteById(todoId);
+    }
 }

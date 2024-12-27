@@ -3,9 +3,8 @@ package com.toDoList.back.REST;
 import com.toDoList.back.Entity.User;
 import com.toDoList.back.GlobalHandle.NotFoundException;
 import com.toDoList.back.GlobalHandle.UnauthorizedException;
-import com.toDoList.back.GlobalHandle.UserAlreadyExistsException;
+import com.toDoList.back.GlobalHandle.AlreadyExistsException;
 import com.toDoList.back.Service.UserService.UserService;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +22,14 @@ public class UserRestController {
     @GetMapping("/{username}")
     public User getUserDetails(@PathVariable String username) {
         User user = userService.findByUserName(username);
-        if(user == null) throw new NotFoundException("User with username " + username + " not found.");
-        user = userService.GetAllDetails(user);
+        if(user == null) throw new NotFoundException("User with username \"" + username + "\" not found.");
         return user;
     }
 
     @PostMapping
     public User createUser(@RequestBody User user){
         if(userService.findByUserName(user.getUsername()) != null)
-            throw new UserAlreadyExistsException("User with username " + user.getUsername() + " already exists.");
+            throw new AlreadyExistsException("User with username \"" + user.getUsername() + "\" already exists.");
 
         user.setUserId(null);
         return userService.save(user);

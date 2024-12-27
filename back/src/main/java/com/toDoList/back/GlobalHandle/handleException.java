@@ -17,8 +17,8 @@ public class handleException {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExistsException(AlreadyExistsException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 

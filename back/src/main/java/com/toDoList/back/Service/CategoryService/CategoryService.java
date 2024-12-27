@@ -8,5 +8,5 @@ public interface CategoryService {
     List<Category> findByUserId(Integer userId);
     Category save(Category category);
     void delete(Integer categoryId);
-
+    List<Category> findByUserIdAndName(Integer userId, String name);
 }
