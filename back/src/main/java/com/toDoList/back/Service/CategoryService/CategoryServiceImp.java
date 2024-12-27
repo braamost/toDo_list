@@ -2,7 +2,9 @@ package com.toDoList.back.Service.CategoryService;
 
 import com.toDoList.back.DAO.CategoryRepository;
 import com.toDoList.back.DAO.TodoRepository;
+import com.toDoList.back.DAO.TodoRepository;
 import com.toDoList.back.Entity.Category;
+import com.toDoList.back.Entity.TodoLists;
 import com.toDoList.back.Entity.TodoLists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

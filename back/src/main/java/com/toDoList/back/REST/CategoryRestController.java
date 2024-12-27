@@ -2,7 +2,9 @@ package com.toDoList.back.REST;
 
 import com.toDoList.back.Entity.Category;
 import com.toDoList.back.Entity.User;
+import com.toDoList.back.Entity.User;
 import com.toDoList.back.Service.CategoryService.CategoryService;
+import com.toDoList.back.Service.UserService.UserService;
 import com.toDoList.back.Service.UserService.UserService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class CategoryRestController {
 
     private final CategoryService categoryService;
     private final UserService userService;
+
 
     @Autowired
     public CategoryRestController(CategoryService categoryService , UserService userService) {
