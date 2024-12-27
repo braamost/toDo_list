@@ -2,6 +2,7 @@ package com.toDoList.back.Entity;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,6 +39,18 @@ public class User {
         this.password = password;
         this.mobileNumber = mobileNumber;
     }
+
+    @Transient
+    private List<Category> categories ;
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+
 
     @PrePersist
     public void prePersist() {

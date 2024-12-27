@@ -24,6 +24,7 @@ public class UserRestController {
     public User getUserDetails(@PathVariable String username) {
         User user = userService.findByUserName(username);
         if(user == null) throw new NotFoundException("User with username " + username + " not found.");
+        user = userService.GetAllDetails(user);
         return user;
     }
 
