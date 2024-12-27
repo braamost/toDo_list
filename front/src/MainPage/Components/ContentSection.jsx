@@ -2,7 +2,8 @@ import React, { useState,useContext } from 'react';
 import { Datacontext } from '../../main';
 import { fetchData } from '../../Fetch/Fetch';
 import axios from 'axios';
-import { RefreshCcw, Trash2 } from 'lucide-react';
+import { Mail, Trash2, Users, LogOut, Send, Menu, X, MessageCircle, PlusIcon, TrashIcon, PlusCircle ,RefreshCcw} from "lucide-react";
+import PlusButton from "./Button";
 import { deleteCategory } from '../../Delete/DeleteCategories';
 
 
@@ -47,9 +48,34 @@ const ContentSection = ({
       </button>
       </div>
       </div>
-    
+       
       <div>
-     
+      <nav className="mt-8 space-y-2">
+             
+
+             <div className="min-w-full min-h-full ">
+               <PlusButton category={category}></PlusButton>
+               <button
+                 className="
+                   bg-red-500
+                   hover:bg-red-600
+                   text-white
+                   p-3
+                   rounded-full
+                   shadow-lg
+                   transition
+                   duration-300
+                   ease-in-out
+                   hover:scale-110
+                   fixed
+                   left-80
+                   bottom-20
+                 "
+               >
+                 <TrashIcon className="w-full h-full" />
+               </button>
+             </div>
+           </nav>     
       </div>
     </div>
   );

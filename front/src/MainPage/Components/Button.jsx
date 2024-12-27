@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { PlusIcon, X } from 'lucide-react';
+import axios from 'axios';
+import { fetchData } from '../../Fetch/Fetch';
+import { Datacontext } from '../../main';
 
-const PlusButton = () => {
+const PlusButton = ({category}) => {
+  const {user,setUser}=useContext(Datacontext);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [description, setDescription] = useState('');
+  const [content, setDescription] = useState('');
   const [importance, setImportance] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [dueTime, setDueTime] = useState('');
   const [errors, setErrors] = useState({});
 
+  
  
 
  
@@ -41,16 +46,22 @@ const PlusButton = () => {
   };
 
   const handleSubmit = () => {
+    console.log(category.name);
     if (validateForm()) {
-      console.log('Submitted:', {
-        content: inputValue,
-        description,
+      const dto={
+        title: inputValue,
+        content,
         importance,
         dueDate,
-        dueTime
-      });
+        dueTime,
+        categoryId:category.id
+      };
+      console.log(dto);
       toggleDialog();
+      response=axios.post("http://localhost:8080/api/todo",dto);
     }
+    fetchData(user,setUser);
+    console.log(user);
   };
 
   const handleInputChange = (e) => {
@@ -89,7 +100,6 @@ const PlusButton = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-pink-600">Add New Task</h2>
-            
             <div className="mb-4">
               <input
                 type="text"
@@ -108,9 +118,9 @@ const PlusButton = () => {
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Description</label>
               <textarea
-                value={description}
+                value={content}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Add task description..."
+                placeholder="Add task content..."
                 className="w-full p-2 border rounded text-gray-700 h-24 resize-none"
               />
             </div>
@@ -186,7 +196,7 @@ const PlusButton = () => {
                 onClick={handleSubmit}
                 className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition"
               >
-                Submit
+                Add
               </button>
             </div>
           </div>
