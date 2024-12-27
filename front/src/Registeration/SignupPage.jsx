@@ -6,6 +6,7 @@ import InputField from './InputField';
 import SubmitButton from './SubmitButton';
 import { Datacontext } from '../main';
 import { use } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
 
 const SignupPage = () => {
@@ -111,6 +112,13 @@ const SignupPage = () => {
           </div>
           <SubmitButton error={ErrorMessage} />
         </form>
+        
+        <p className="text-sm !mt-8 text-center text-gray-800">
+     have an account ?{' '}
+    <Link to="/app" className="text-pink-600 font-semibold hover:underline ml-1 whitespace-nowrap">Log in</Link>
+
+  </p>
+        
       </div>
     </div>
   );

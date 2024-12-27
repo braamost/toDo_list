@@ -46,7 +46,7 @@ export const LoginForm = ({ formData, onInputChange, onSubmit,error
         <div className="!mt-8">
           <button 
             type="submit" 
-            className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-pink-600 hover:bg-pink-700 focus:outline-none"
           >
             Log in
           </button>

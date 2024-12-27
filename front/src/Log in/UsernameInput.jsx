@@ -10,7 +10,7 @@ export const UsernameInput = ({ value, onChange }) => (
         name="username"
         type="text" 
         required 
-        className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600" 
+        className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-pink-600" 
         placeholder="Enter user name"
         value={value}
         onChange={onChange}
