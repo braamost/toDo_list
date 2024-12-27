@@ -5,7 +5,7 @@ import { LoginForm } from './LoginForm';
 import { LoginIllustration } from './LoginIllustration';
 import { Datacontext } from '../main';
 import { CodeSquare } from 'lucide-react';
-
+import { fetchData } from '../Fetch/Fetch';
 const LoginPage = () => {
   const navigate = useNavigate();
   const {user,setUser} =useContext(Datacontext);
@@ -35,6 +35,8 @@ const LoginPage = () => {
       if (response.status === 200) {
         setErrorMEssage(null);
         setUser(response.data);
+        const data = fetchData(response.data.username);
+        console.log(data);
         navigate('/main page');
       }
     } catch (error) {
