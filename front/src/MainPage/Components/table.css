@@ -1,0 +1,117 @@
+.pageContent{
+    display: flex;
+    gap :120px;
+    border :none !important;
+    width: 100%; 
+    height: auto;
+}
+.container {
+    position: relative; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .rdt_Table {
+    font-size: larger;
+    width: 100%; /* Make table take full width of container */
+    min-width: auto; /* Remove fixed min-width */
+    overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.search {
+    width: 100%;
+    max-width: 500px;
+    min-width: 800px; 
+    border-radius: 5px;
+    border: none;
+    min-height: 20px;
+    padding: 5px;
+    margin: 12px;
+    font-size: large;
+    font-style: bold;
+}
+/* Add borders to column headers */
+.rdt_TableCol {
+    background-color: #f8f9fa; 
+    font-weight: bold; 
+    text-align: center;
+    font-size: x-large;
+}
+
+/* Center-align all table content */
+.rdt_TableCell {
+    text-align: center;
+    font-size: larger;
+}
+.up{
+    display: flex;
+    justify-content: space-between;
+}
+.buttons{
+    display: flex;
+}
+.refresh{
+
+    display: flex; 
+
+transform: translate(0, 0) rotate(0) skewX(0) skewY(0) scaleX(1.1) scaleY(1.1); 
+
+align-items: center; 
+
+border-radius: 0.25rem; 
+
+padding-left: 1rem; 
+
+padding-right: 1rem; 
+
+padding-top: 0.5rem; 
+
+padding-bottom: 0.5rem; 
+
+font-weight: 700; 
+
+color: rgb(59,130,246); 
+
+transition-property: all; 
+
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+
+transition-duration: 300ms;
+}
+
+RefreshCcw{
+    margin-right: 0.5rem;
+}
+.trash{
+    display: flex; 
+
+transform: translate(0, 0) rotate(0) skewX(0) skewY(0) scaleX(1.1) scaleY(1.1); 
+
+align-items: center; 
+
+border-radius: 0.25rem; 
+
+padding-left: 1rem; 
+
+padding-right: 1rem; 
+
+padding-top: 0.5rem; 
+
+padding-bottom: 0.5rem; 
+
+font-weight: 700; 
+
+color: rgb(239,68,68); 
+
+transition-property: all; 
+
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+
+transition-duration: 300ms;
+}
+Trash2{
+    margin-right: 0.5rem;
+}

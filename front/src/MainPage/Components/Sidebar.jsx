@@ -35,7 +35,7 @@ const Sidebar = ({
 
   return (
     <div
-      className={`bg-white shadow-lg transition-all duration-300 flex ${
+      className={`bg-white shadow-lg transition-all duration-300 flex z-15 ${
         isSidebar ? "w-64" : "w-16"
       }`}
     >
@@ -102,7 +102,7 @@ const Sidebar = ({
             <nav className="mt-8 space-y-2">
              
 
-              <div className="min-w-full min-h-full ">
+              <div className="min-w-full min-h-full z-10 ">
                 <PlusButton></PlusButton>
                 <button
                   className="
