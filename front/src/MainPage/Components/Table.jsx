@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import "./table.css"
+import axios from "axios";
 import DataTable from "react-data-table-component";
 import { RefreshCcw, Trash2 } from 'lucide-react';
 function MyTasks() {
+    const [error , setError] = useState("")
+    const [selectedRows, setSelectedRows] = useState([]);
     const columns = [
         {
             name: "Task",
@@ -117,6 +120,33 @@ function MyTasks() {
     }]
 
     const [filteredTasks, setFilteredTasks] = useState(data || []);
+    const handleSelectedRowsChange = (state) => {
+        setSelectedRows(state.selectedRows);
+        console.log("Selected Rows:", state.selectedRows);
+      };
+    const deleteTasks = async ()=>{
+        try {
+            const response = selectedRows.map((todo) =>
+                axios.delete(`http://localhost:8080/api/todo/${todo.id}`)
+              );
+              await Promise.all(response);
+        
+              setFilteredTasks((prevTodos) => {
+                const selectedIds = selectedRows.map((todo) => todo.id);
+        
+                const updatedtodos = prevTodos.filter(
+                  (todo) => !selectedIds.includes(todo.id)
+                );
+                return updatedtodos;
+              });
+        
+              alert("todos permanently deleted");  
+        } catch (error) {
+            console.error("Failed to update emails", error);
+            setError(`Failed to update emails`);
+            
+    }
+}
 
     // useEffect(() => {
     //     const fetchContacts = async () => {
@@ -170,6 +200,7 @@ function MyTasks() {
                         </button>
                         <button
                             className="trash"
+                            onClick={deleteTasks}
 
                         >
                             <Trash2 size={18} />
@@ -187,6 +218,7 @@ function MyTasks() {
                     pagination
                     paginationPerPage={6}
                     noDataComponent="No Tasks found"
+                    onSelectedRowsChange={handleSelectedRowsChange}
                     defaultSortFieldId={1}
                 />
             </div>
