@@ -22,7 +22,7 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public List<Category> findByUserId(Integer userId){
-        List<Category>  categories = categoryRepository.findByUserIdAndName(userId);
+        List<Category>  categories = categoryRepository.findByUserId(userId);
         for(Category category : categories){
             List<TodoLists> tasks = todoRepository.findByCategoryId(category.getCategoryId());
             category.setTasks(tasks);

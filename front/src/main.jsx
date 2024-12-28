@@ -7,6 +7,7 @@ import MainPage from "./MainPage/MainPage";
 
 export const Datacontext = createContext();
 
+
 const router = createBrowserRouter([
   {
     path: "/app",
@@ -32,6 +33,7 @@ function Main() {
   // Update localStorage whenever user state changes
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
+    
   }, [user]);
 
   return (
