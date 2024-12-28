@@ -2,7 +2,6 @@ import { useState, useEffect,useContext } from "react";
 import "./table.css"
 import DataTable from "react-data-table-component";
 import { RefreshCcw, Trash2 } from 'lucide-react';
-import { fetchData } from "../../Fetch/Fetch";
 import { Datacontext } from "../../main";
 function MyTasks({data}) {
     const {user,setUser}= useContext(Datacontext);
@@ -26,23 +25,17 @@ function MyTasks({data}) {
     
     const [filteredTasks, setFilteredTasks] = useState(data || []);
 
-    // useEffect(() => {
-    //     const fetchContacts = async () => {
-    //         try {
-    //             const data = await fetchData(user,setUser); // Assuming FetchContacts is a function that fetches data
-                
-    //             setFilteredTasks(data); // Setting the fetched data to state
-    //         } catch (error) {
-    //             console.error("Error fetching contacts:", error);
-    //         }
-    //     };
-
-    //     fetchData(user,setUser); // Call the async function to fetch contacts
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                setFilteredTasks(data); // Setting the fetched data to state
+            } catch (error) {
+                console.error("Error fetching contacts:", error);
+            }
+        };
+        fetchTasks(); 
         
-    // }, [data]);
-    // useEffect(() => {
-    //     fetchData(user,setUser);
-    //  }, [data]);
+    }, [user]);
 
     const handleSearch = (e) => {
         const searchValue = e.target.value.toLowerCase();
