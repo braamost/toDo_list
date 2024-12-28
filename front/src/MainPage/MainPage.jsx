@@ -17,7 +17,7 @@ const MainPage = () => {
   };
 
   const onLogout = () => {
-    navigate("/");
+    navigate("/app");
   };
 
   return (
