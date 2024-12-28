@@ -45,7 +45,7 @@ const taskAdding = ({category}) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(category.name);
     if (validateForm()) {
       const combinedDateTime = `${dueDate}T${dueTime}`; 
@@ -59,7 +59,7 @@ const taskAdding = ({category}) => {
       };
       console.log(dto);
       toggleDialog();
-      const response=axios.post("http://localhost:8080/api/todo",dto);
+      const response=await axios.post("http://localhost:8080/api/todo",dto);
       console.log("no error", response);
     }
     fetchData(user,setUser);
