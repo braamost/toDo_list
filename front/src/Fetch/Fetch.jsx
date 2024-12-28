@@ -9,6 +9,7 @@ export async function fetchData(user, setUser) {
       ...prevUser,
       categories: response.data
     }));
+    console.log(response.data);
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;

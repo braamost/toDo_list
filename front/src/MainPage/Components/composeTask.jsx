@@ -40,6 +40,10 @@ const taskAdding = ({category}) => {
     if (!dueDate) {
       newErrors.dueDate = 'Due date is required';
     }
+    
+    if (!dueTime) {
+      newErrors.dueTime = 'Due time is required';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
