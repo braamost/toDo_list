@@ -35,23 +35,23 @@ function MyTasks({data}) {
     const deleteTasks = async ()=>{
         try {
             const response = selectedRows.map((todo) =>
-                axios.delete(`http://localhost:8080/api/todo/${todo.id}`)
+                axios.delete(`http://localhost:8080/api/todo/${todo.todoId}`)
               );
               await Promise.all(response);
-        
               setFilteredTasks((prevTodos) => {
-                const selectedIds = selectedRows.map((todo) => todo.id);
+                const selectedIds = selectedRows.map((todo) => todo.todoId);
         
                 const updatedtodos = prevTodos.filter(
-                  (todo) => !selectedIds.includes(todo.id)
+                  (todo) => !selectedIds.includes(todo.todoId)
                 );
+                fetchData(user , setUser)
                 return updatedtodos;
               });
         
               alert("todos permanently deleted");  
         } catch (error) {
-            console.error("Failed to update emails", error);
-            setError(`Failed to update emails`);
+            console.error("Failed to update todos", error);
+            setError(`Failed to update todos`);
             
     }
 }
