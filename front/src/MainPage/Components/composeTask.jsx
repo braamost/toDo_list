@@ -131,10 +131,6 @@ const taskAdding = ({category}) => {
               />
             </div>
 
-            
-
-            
-
             <div className="flex gap-4 mb-4">
               <div className="flex-1">
                 <label className="block text-gray-700 mb-2">
