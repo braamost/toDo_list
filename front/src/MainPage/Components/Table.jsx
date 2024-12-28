@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import "./table.css"
 import DataTable from "react-data-table-component";
 import { RefreshCcw, Trash2 } from 'lucide-react';
-function MyTasks() {
+import { fetchData } from "../../Fetch/Fetch";
+import { Datacontext } from "../../main";
+function MyTasks({data}) {
+    const {user,setUser}= useContext(Datacontext);
     const columns = [
         {
             name: "Task",
@@ -19,123 +22,27 @@ function MyTasks() {
             selector: row => row.dueDate,
             sortable: true,
         },
-        {
-            name: "Due Time",
-            selector: row => row.dueTime,
-            sortable: true,
-        }];
-    const data = [{
-        "id": 1,
-        "content": "Algorithms",
-        "importance": "medium",
-        "dueTime": "8:21 AM",
-        "dueDate": "2024-05-21"
-    }, {
-        "id": 2,
-        "content": "Operating Systems",
-        "importance": "low",
-        "dueTime": "1:33 AM",
-        "dueDate": "2024-01-03"
-    }, {
-        "id": 3,
-        "content": "Data Structures",
-        "importance": "low",
-        "dueTime": "4:11 PM",
-        "dueDate": "2024-02-16"
-    }, {
-        "id": 4,
-        "content": "Database Systems",
-        "importance": "medium",
-        "dueTime": "11:40 PM",
-        "dueDate": "2024-01-20"
-    }, {
-        "id": 5,
-        "content": "Data Structures",
-        "importance": "high",
-        "dueTime": "10:15 AM",
-        "dueDate": "2024-06-26"
-    }, {
-        "id": 6,
-        "content": "Cybersecurity",
-        "importance": "high",
-        "dueTime": "4:48 PM",
-        "dueDate": "2024-09-21"
-    }, {
-        "id": 7,
-        "content": "Data Structures",
-        "importance": "high",
-        "dueTime": "6:51 AM",
-        "dueDate": "2024-05-15"
-    }, {
-        "id": 8,
-        "content": "Machine Learning",
-        "importance": "medium",
-        "dueTime": "5:23 PM",
-        "dueDate": "2024-10-22"
-    }, {
-        "id": 9,
-        "content": "Software Engineering",
-        "importance": "high",
-        "dueTime": "3:34 AM",
-        "dueDate": "2024-12-01"
-    }, {
-        "id": 10,
-        "content": "Operating Systems",
-        "importance": "low",
-        "dueTime": "12:37 AM",
-        "dueDate": "2024-11-17"
-    }, {
-        "id": 11,
-        "content": "Computer Architecture",
-        "importance": "high",
-        "dueTime": "7:37 PM",
-        "dueDate": "2024-05-02"
-    }, {
-        "id": 12,
-        "content": "Software Engineering",
-        "importance": "medium",
-        "dueTime": "12:11 PM",
-        "dueDate": "2024-12-15"
-    }, {
-        "id": 13,
-        "content": "Computer Networks",
-        "importance": "medium",
-        "dueTime": "8:28 PM",
-        "dueDate": "2024-01-04"
-    }, {
-        "id": 14,
-        "content": "Computer Graphics",
-        "importance": "high",
-        "dueTime": "9:53 AM",
-        "dueDate": "2024-06-26"
-    }, {
-        "id": 15,
-        "content": "Data Structures",
-        "importance": "low",
-        "dueTime": "11:00 AM",
-        "dueDate": "2024-11-18"
-    }]
-
+        ];
+    
     const [filteredTasks, setFilteredTasks] = useState(data || []);
 
     // useEffect(() => {
     //     const fetchContacts = async () => {
     //         try {
-    //             const data = await FetchContacts(user.id); // Assuming FetchContacts is a function that fetches data
-    //             console.log(data);
-    //             setFilteredContacts(data); // Setting the fetched data to state
+    //             const data = await fetchData(user,setUser); // Assuming FetchContacts is a function that fetches data
+                
+    //             setFilteredTasks(data); // Setting the fetched data to state
     //         } catch (error) {
     //             console.error("Error fetching contacts:", error);
     //         }
     //     };
 
-    //     fetchContacts(); // Call the async function to fetch contacts
-    // }, [user.id]);
-
-    // Initialize state with contacts prop
-    // useEffect(() => {
-    //     setFilteredTasks(data || []);
+    //     fetchData(user,setUser); // Call the async function to fetch contacts
+        
     // }, [data]);
+    // useEffect(() => {
+    //     fetchData(user,setUser);
+    //  }, [data]);
 
     const handleSearch = (e) => {
         const searchValue = e.target.value.toLowerCase();

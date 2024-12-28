@@ -82,9 +82,9 @@ const taskAdding = ({category}) => {
 
   const getImportanceColor = () => {
     const colors = {
-      low: 'bg-green-500',
-      medium: 'bg-yellow-500',
-      high: 'bg-red-500'
+      LOW: 'bg-green-500',
+      MEDIUM: 'bg-yellow-500',
+      HIGH: 'bg-red-500'
     };
     return colors[importance];
   };
