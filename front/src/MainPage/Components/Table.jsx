@@ -2,7 +2,7 @@ import { useState, useEffect,useContext } from "react";
 import "./table.css"
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { RefreshCcw, Trash2 } from 'lucide-react';
+import { Check, Trash2 } from 'lucide-react';
 import { fetchData } from "../../Fetch/Fetch";
 import { Datacontext } from "../../main";
 function MyTasks({data}) {
@@ -55,6 +55,22 @@ function MyTasks({data}) {
             
     }
 }
+const markAsDone = async () =>{
+    try {
+        const response = selectedRows.map((todo) =>{
+            todo.status="COMPLETED";
+            axios.put(`http://localhost:8080/api/todo/${todo.todoId}`,todo)
+    });
+          await Promise.all(response);
+          fetchData(user , setUser)
+          alert("todos are updated");  
+    } catch (error) {
+        console.error("Failed to update todos", error);
+        setError(`Failed to update todos`);
+        
+    }
+
+}
 
     // useEffect(() => {
     //     const fetchContacts = async () => {
@@ -101,9 +117,10 @@ function MyTasks({data}) {
                     <div className="buttons">
                         <button
                             className="refresh"
+                            onClick={markAsDone}
 
                         >
-                            <RefreshCcw size={18} />
+                            <Check size={20} />
                         </button>
                         <button
                             className="trash"
