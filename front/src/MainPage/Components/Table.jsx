@@ -12,6 +12,7 @@ function MyTasks({data}) {
     const [toggleCleared, setToggleCleared] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [filteredTasks, setFilteredTasks] = useState(data || []);
 
     const customStyles = {
         table: {
@@ -54,6 +55,7 @@ function MyTasks({data}) {
             {status?.toLowerCase() || 'pending'}
         </div>
     );
+
     const importanceSortFunction = (rowA, rowB) => {
         const importanceOrder = {
             'HIGH': 3,
@@ -64,8 +66,9 @@ function MyTasks({data}) {
         const valueA = importanceOrder[rowA.importance.toUpperCase()] || 0;
         const valueB = importanceOrder[rowB.importance.toUpperCase()] || 0;
         
-        return valueB - valueA; // Default to descending (HIGH to LOW)
+        return valueB - valueA;
     };
+
     const ImportanceCell = ({ importance }) => {
         const getColor = (importance) => {
             const colors = {
@@ -258,16 +261,8 @@ function MyTasks({data}) {
                     </div>
                 );
             }
-        },
-        {
-            name: "Status",
-            selector: row => row.status,
-            sortable: true,
-            cell: row => <StatusCell status={row.status} />
         }
     ];
-    
-    const [filteredTasks, setFilteredTasks] = useState(data || []);
 
     const handleRowClick = row => {
         setSelectedTask(row);
@@ -343,12 +338,19 @@ function MyTasks({data}) {
         setFilteredTasks(filtered);
     };
 
+    // Split tasks into pending and completed
+    const pendingTasks = filteredTasks.filter(task => task.status !== 'COMPLETED');
+    const completedTasks = filteredTasks.filter(task => task.status === 'COMPLETED');
+
     return (
         <div style={{ 
             width: '100%', 
             height: '100%',
             padding: '20px',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px'
         }}>
             <div style={{ 
                 width: '100%',
@@ -404,22 +406,47 @@ function MyTasks({data}) {
                     </div>
                 </div>
 
-                <DataTable
-                    columns={columns}
-                    data={filteredTasks}
-                    selectableRows
-                    fixedHeader
-                    pagination
-                    customStyles={customStyles}
-                    paginationPerPage={10}
-                    paginationRowsPerPageOptions={[10, 20, 30, 40, 50]}
-                    noDataComponent="No Tasks found"
-                    onSelectedRowsChange={handleSelectedRowsChange}
-                    clearSelectedRows={toggleCleared}
-                    defaultSortFieldId={1}
-                    onRowClicked={handleRowClick}
-                    pointerOnHover
-                />
+                {/* Pending Tasks Table */}
+                <div style={{ marginBottom: '20px' }}>
+                    <h2 style={{ padding: '16px', margin: 0, color: '#666' }}>Pending Tasks</h2>
+                    <DataTable
+                        columns={columns}
+                        data={pendingTasks}
+                        selectableRows
+                        fixedHeader
+                        pagination
+                        customStyles={customStyles}
+                        paginationPerPage={10}
+                        paginationRowsPerPageOptions={[10, 20, 30, 40, 50]}
+                        noDataComponent="No pending tasks found"
+                        onSelectedRowsChange={handleSelectedRowsChange}
+                        clearSelectedRows={toggleCleared}
+                        onRowClicked={handleRowClick}
+                        pointerOnHover
+                    />
+                </div>
+
+                {/* Completed Tasks Table - Only show if there are completed tasks */}
+                {completedTasks.length > 0 && (
+                    <div>
+                        <h2 style={{ padding: '16px', margin: 0, color: '#666' }}>Completed Tasks</h2>
+                        <DataTable
+                            columns={columns}
+                            data={completedTasks}
+                            selectableRows
+                            fixedHeader
+                            pagination
+                            customStyles={customStyles}
+                            paginationPerPage={10}
+                            paginationRowsPerPageOptions={[10, 20, 30, 40, 50]}
+                            noDataComponent="No completed tasks found"
+                            onSelectedRowsChange={handleSelectedRowsChange}
+                            clearSelectedRows={toggleCleared}
+                            onRowClicked={handleRowClick}
+                            pointerOnHover
+                        />
+                    </div>
+                )}
 
                 <TaskDetailsModal 
                     task={selectedTask}
