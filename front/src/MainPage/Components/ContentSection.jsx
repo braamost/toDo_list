@@ -19,11 +19,11 @@ import {
 } from "lucide-react";
 import TaskAdding from "./composeTask";
 import { deleteCategory } from "../../Delete/DeleteCategories";
-const ContentSection = ({ title, category, tasks = [] }) => {
+const ContentSection = ({ category }) => {
   const { user, setUser } = useContext(Datacontext);
   const handleDelete = async (e) => {
     try {
-      console.log("Deleting category:", title);
+      console.log("Deleting category:", category.name);
       console.log("Category ID:", category.categoryId);
       await deleteCategory(category.categoryId);
       window.alert("Category deleted successfully");
@@ -37,7 +37,7 @@ const ContentSection = ({ title, category, tasks = [] }) => {
     <>
       <div>
         <div className="flex flex-col items-center text-gray-500 font-medium text-sm justify-between space-x-2">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6">{title}</h3>
+          <h3 className="text-2xl font-bold text-gray-800 mb-6">{category.name}</h3>
           <MyTasks data={category.tasks}/>
           <nav className="mt-8 space-y-2">
             <div className="min-w-full min-h-full ">

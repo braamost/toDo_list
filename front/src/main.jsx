@@ -1,5 +1,4 @@
 import { createContext, StrictMode, useState, useEffect } from "react";
-import { createContext, StrictMode, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
@@ -46,5 +45,4 @@ function Main() {
   );
 }
 
-createRoot(document.getElementById("root")).render(<Main />);
 createRoot(document.getElementById("root")).render(<Main />);

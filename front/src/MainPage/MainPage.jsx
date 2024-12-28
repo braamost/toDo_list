@@ -38,9 +38,7 @@ const MainPage = () => {
                 activeSection === c.name && (
                   <ContentSection
                     key={c.categoryId} // Add a key prop
-                    title={c.name}
                     category={c}
-                    tasks={c.tasks === null ? [] : c.tasks} // Use nullish coalescing
                   >
                     <div className="text-gray-600">
                       Your messages will appear here
