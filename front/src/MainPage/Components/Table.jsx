@@ -1,16 +1,42 @@
-import { useState, useEffect, useContext } from "react";
-import "./table.css";
-import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
+import { Check, Trash2, X } from 'lucide-react';
 import DataTable from "react-data-table-component";
-import { Check, Trash2 } from 'lucide-react';
 import { Datacontext } from "../../main";
 import { fetchData } from "../../Fetch/Fetch";
+import axios from "axios";
 
 function MyTasks({data}) {
     const {user, setUser} = useContext(Datacontext);
     const [error, setError] = useState("");
     const [selectedRows, setSelectedRows] = useState([]);
-    const [toggleCleared, setToggleCleared] = useState(false); 
+    const [toggleCleared, setToggleCleared] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const customStyles = {
+        table: {
+            style: {
+                minWidth: '100%',
+            },
+        },
+        rows: {
+            style: {
+                minHeight: '60px',
+            },
+        },
+        headRow: {
+            style: {
+                minHeight: '56px',
+                backgroundColor: '#f8f9fa',
+            },
+        },
+        cells: {
+            style: {
+                paddingLeft: '16px',
+                paddingRight: '16px',
+            },
+        },
+    };
 
     const StatusCell = ({ status }) => (
         <div
@@ -60,11 +86,138 @@ function MyTasks({data}) {
         );
     };
 
+    const CustomModal = ({ isOpen, onClose, children }) => {
+        if (!isOpen) return null;
+
+        return (
+            <div 
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 1000
+                }}
+                onClick={onClose}
+            >
+                <div 
+                    style={{
+                        backgroundColor: 'white',
+                        padding: '24px',
+                        borderRadius: '8px',
+                        maxWidth: '600px',
+                        width: '90%',
+                        maxHeight: '90vh',
+                        overflow: 'auto'
+                    }}
+                    onClick={e => e.stopPropagation()}
+                >
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'flex-end'
+                    }}>
+                        <button 
+                            onClick={onClose}
+                            style={{
+                                border: 'none',
+                                background: 'none',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <X size={24} />
+                        </button>
+                    </div>
+                    {children}
+                </div>
+            </div>
+        );
+    };
+
+    const TaskDetailsModal = ({ task, isOpen, onClose }) => {
+        if (!task) return null;
+        
+        return (
+            <CustomModal isOpen={isOpen} onClose={onClose}>
+                <div style={{ padding: '16px' }}>
+                    <h2 style={{ 
+                        fontSize: '1.5rem', 
+                        fontWeight: 'bold',
+                        marginBottom: '1.5rem'
+                    }}>
+                        {task.title}
+                    </h2>
+                    
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: '1rem',
+                        marginBottom: '1.5rem'
+                    }}>
+                        <div>
+                            <h3 style={{ 
+                                fontSize: '0.875rem',
+                                fontWeight: '600',
+                                color: '#666',
+                                marginBottom: '0.5rem'
+                            }}>
+                                Status
+                            </h3>
+                            <StatusCell status={task.status} />
+                        </div>
+                        <div>
+                            <h3 style={{ 
+                                fontSize: '0.875rem',
+                                fontWeight: '600',
+                                color: '#666',
+                                marginBottom: '0.5rem'
+                            }}>
+                                Importance
+                            </h3>
+                            <ImportanceCell importance={task.importance} />
+                        </div>
+                    </div>
+                    
+                    <div style={{ marginBottom: '1.5rem' }}>
+                        <h3 style={{ 
+                            fontSize: '0.875rem',
+                            fontWeight: '600',
+                            color: '#666',
+                            marginBottom: '0.5rem'
+                        }}>
+                            Due Date
+                        </h3>
+                        <p>{new Date(task.dueDate).toLocaleString()}</p>
+                    </div>
+                    
+                    {task.content && (
+                        <div>
+                            <h3 style={{ 
+                                fontSize: '0.875rem',
+                                fontWeight: '600',
+                                color: '#666',
+                                marginBottom: '0.5rem'
+                            }}>
+                                Description
+                            </h3>
+                            <p style={{ color: '#333' }}>{task.content}</p>
+                        </div>
+                    )}
+                </div>
+            </CustomModal>
+        );
+    };
+
     const columns = [
         {
             name: "Task",
             selector: row => row.title,
             sortable: true,
+            grow: 2,
         },
         {
             name: "Importance",
@@ -83,7 +236,6 @@ function MyTasks({data}) {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
                         gap: '4px'
                     }}>
                         <span style={{ fontWeight: '500' }}>
@@ -117,6 +269,11 @@ function MyTasks({data}) {
     
     const [filteredTasks, setFilteredTasks] = useState(data || []);
 
+    const handleRowClick = row => {
+        setSelectedTask(row);
+        setIsModalOpen(true);
+    };
+
     const handleSelectedRowsChange = (state) => {
         setSelectedRows(state.selectedRows);
     };
@@ -140,7 +297,7 @@ function MyTasks({data}) {
                 fetchData(user, setUser);
                 return updatedtodos;
             });
-            resetSelection(); // Reset selection after delete
+            resetSelection();
             alert("todos permanently deleted");
         } catch (error) {
             console.error("Failed to update todos", error);
@@ -156,7 +313,7 @@ function MyTasks({data}) {
             });
             await Promise.all(response);
             await fetchData(user, setUser);
-            resetSelection(); // Reset selection after marking as done
+            resetSelection();
             alert("todos are updated");
         } catch (error) {
             console.error("Failed to update todos", error);
@@ -178,35 +335,69 @@ function MyTasks({data}) {
     const handleSearch = (e) => {
         const searchValue = e.target.value.toLowerCase();
         const filtered = data.filter(row => {
-            return row.content.toLowerCase().includes(searchValue) ||
-                row.importance.toLowerCase().includes(searchValue) ||
-                (row.status?.toLowerCase() || '').includes(searchValue);
+            return row.content?.toLowerCase().includes(searchValue) ||
+                   row.importance?.toLowerCase().includes(searchValue) ||
+                   row.title?.toLowerCase().includes(searchValue) ||
+                   (row.status?.toLowerCase() || '').includes(searchValue);
         });
         setFilteredTasks(filtered);
     };
 
     return (
-        <div className="pageContent">
-            <div className="container">
-                <div className="up">
-                    <div>
-                        <input
-                            className="search"
-                            type="text"
-                            onChange={handleSearch}
-                            placeholder="Search by task, importance, or status..."
-                        />
-                    </div>
-                    <div className="buttons">
+        <div style={{ 
+            width: '100%', 
+            height: '100%',
+            padding: '20px',
+            boxSizing: 'border-box'
+        }}>
+            <div style={{ 
+                width: '100%',
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                overflow: 'hidden'
+            }}>
+                <div style={{
+                    padding: '16px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottom: '1px solid #e0e0e0'
+                }}>
+                    <input
+                        style={{
+                            padding: '8px 12px',
+                            borderRadius: '4px',
+                            border: '1px solid #e0e0e0',
+                            width: '300px'
+                        }}
+                        type="text"
+                        onChange={handleSearch}
+                        placeholder="Search by task, importance, or status..."
+                    />
+                    <div style={{ display: 'flex', gap: '8px' }}>
                         <button
-                            className="refresh"
                             onClick={markAsDone}
+                            style={{
+                                padding: '8px',
+                                borderRadius: '4px',
+                                border: 'none',
+                                backgroundColor: '#4CAF50',
+                                color: 'white',
+                                cursor: 'pointer'
+                            }}
                         >
                             <Check size={20} />
                         </button>
                         <button
-                            className="trash"
                             onClick={deleteTasks}
+                            style={{
+                                padding: '8px',
+                                borderRadius: '4px',
+                                border: 'none',
+                                backgroundColor: '#f44336',
+                                color: 'white',
+                                cursor: 'pointer'
+                            }}
                         >
                             <Trash2 size={18} />
                         </button>
@@ -219,11 +410,24 @@ function MyTasks({data}) {
                     selectableRows
                     fixedHeader
                     pagination
-                    paginationPerPage={6}
+                    customStyles={customStyles}
+                    paginationPerPage={10}
+                    paginationRowsPerPageOptions={[10, 20, 30, 40, 50]}
                     noDataComponent="No Tasks found"
                     onSelectedRowsChange={handleSelectedRowsChange}
                     clearSelectedRows={toggleCleared}
                     defaultSortFieldId={1}
+                    onRowClicked={handleRowClick}
+                    pointerOnHover
+                />
+
+                <TaskDetailsModal 
+                    task={selectedTask}
+                    isOpen={isModalOpen}
+                    onClose={() => {
+                        setIsModalOpen(false);
+                        setSelectedTask(null);
+                    }}
                 />
             </div>
         </div>
