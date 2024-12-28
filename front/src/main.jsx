@@ -1,4 +1,5 @@
 import { createContext, StrictMode, useState, useEffect } from "react";
+import { createContext, StrictMode, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
@@ -6,6 +7,7 @@ import SignupPage from "./Registeration/SignupPage";
 import MainPage from "./MainPage/MainPage";
 
 export const Datacontext = createContext();
+
 
 const router = createBrowserRouter([
   {
@@ -44,4 +46,5 @@ function Main() {
   );
 }
 
+createRoot(document.getElementById("root")).render(<Main />);
 createRoot(document.getElementById("root")).render(<Main />);

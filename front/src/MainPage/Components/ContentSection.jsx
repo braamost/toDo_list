@@ -19,14 +19,14 @@ import {
 } from "lucide-react";
 import TaskAdding from "./composeTask";
 import { deleteCategory } from "../../Delete/DeleteCategories";
-const ContentSection = ({ title, category, messages = [] }) => {
+const ContentSection = ({ title, category, tasks = [] }) => {
   const { user, setUser } = useContext(Datacontext);
   const handleDelete = async (e) => {
     try {
       console.log("Deleting category:", title);
       console.log("Category ID:", category.categoryId);
-
       await deleteCategory(category.categoryId);
+      window.alert("Category deleted successfully");
       await fetchData(user, setUser);
     } catch (error) {
       console.error("Error in handleDelete:", error);
