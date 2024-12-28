@@ -10,8 +10,8 @@ function MyTasks({data}) {
     const {user, setUser} = useContext(Datacontext);
     const [error, setError] = useState("");
     const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false); 
 
-    // Custom status component with conditional styling
     const StatusCell = ({ status }) => (
         <div
             style={{
@@ -28,6 +28,37 @@ function MyTasks({data}) {
             {status?.toLowerCase() || 'pending'}
         </div>
     );
+    const importanceSortFunction = (rowA, rowB) => {
+        const importanceOrder = {
+            'HIGH': 3,
+            'MEDIUM': 2,
+            'LOW': 1
+        };
+        
+        const valueA = importanceOrder[rowA.importance.toUpperCase()] || 0;
+        const valueB = importanceOrder[rowB.importance.toUpperCase()] || 0;
+        
+        return valueB - valueA; // Default to descending (HIGH to LOW)
+    };
+    const ImportanceCell = ({ importance }) => {
+        const getColor = (importance) => {
+            const colors = {
+                'HIGH': '#ff4444',
+                'MEDIUM': '#ffbb33',
+                'LOW': '#00C851'
+            };
+            return colors[importance.toUpperCase()] || '#757575';
+        };
+
+        return (
+            <div style={{
+                color: getColor(importance),
+                fontWeight: '500'
+            }}>
+                {importance}
+            </div>
+        );
+    };
 
     const columns = [
         {
@@ -39,6 +70,8 @@ function MyTasks({data}) {
             name: "Importance",
             selector: row => row.importance,
             sortable: true,
+            sortFunction: importanceSortFunction,
+            cell: row => <ImportanceCell importance={row.importance} />
         },
         {
             name: "Due Date",
@@ -86,7 +119,11 @@ function MyTasks({data}) {
 
     const handleSelectedRowsChange = (state) => {
         setSelectedRows(state.selectedRows);
-        console.log("Selected Rows:", state.selectedRows);
+    };
+
+    const resetSelection = () => {
+        setToggleCleared(!toggleCleared);
+        setSelectedRows([]);
     };
 
     const deleteTasks = async () => {
@@ -103,7 +140,7 @@ function MyTasks({data}) {
                 fetchData(user, setUser);
                 return updatedtodos;
             });
-            setSelectedRows([]);
+            resetSelection(); // Reset selection after delete
             alert("todos permanently deleted");
         } catch (error) {
             console.error("Failed to update todos", error);
@@ -118,8 +155,8 @@ function MyTasks({data}) {
                 return axios.put(`http://localhost:8080/api/todo/${todo.todoId}`, todo);
             });
             await Promise.all(response);
-            fetchData(user, setUser);
-            setSelectedRows([]);
+            await fetchData(user, setUser);
+            resetSelection(); // Reset selection after marking as done
             alert("todos are updated");
         } catch (error) {
             console.error("Failed to update todos", error);
@@ -185,6 +222,7 @@ function MyTasks({data}) {
                     paginationPerPage={6}
                     noDataComponent="No Tasks found"
                     onSelectedRowsChange={handleSelectedRowsChange}
+                    clearSelectedRows={toggleCleared}
                     defaultSortFieldId={1}
                 />
             </div>
