@@ -44,6 +44,35 @@ function MyTasks({data}) {
             name: "Due Date",
             selector: row => row.dueDate,
             sortable: true,
+            cell: row => {
+                const date = new Date(row.dueDate);
+                return (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '4px'
+                    }}>
+                        <span style={{ fontWeight: '500' }}>
+                            {date.toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: 'numeric'
+                            })}
+                        </span>
+                        <span style={{ 
+                            color: '#666',
+                            fontSize: '0.9em'
+                        }}>
+                            {date.toLocaleTimeString('en-US', { 
+                                hour: '2-digit', 
+                                minute: '2-digit',
+                                hour12: true
+                            })}
+                        </span>
+                    </div>
+                );
+            }
         },
         {
             name: "Status",
@@ -74,6 +103,7 @@ function MyTasks({data}) {
                 fetchData(user, setUser);
                 return updatedtodos;
             });
+            setSelectedRows([]);
             alert("todos permanently deleted");
         } catch (error) {
             console.error("Failed to update todos", error);
@@ -89,6 +119,7 @@ function MyTasks({data}) {
             });
             await Promise.all(response);
             fetchData(user, setUser);
+            setSelectedRows([]);
             alert("todos are updated");
         } catch (error) {
             console.error("Failed to update todos", error);

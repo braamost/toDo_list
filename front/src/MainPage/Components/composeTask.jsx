@@ -70,6 +70,13 @@ const taskAdding = ({category}) => {
     console.log(user);
   };
 
+  const handleTimeChange = (e) => {
+    setDueTime(e.target.value);
+    if (errors.dueTime) {
+      setErrors(prev => ({ ...prev, dueTime: '' }));
+    }
+};
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
     if (errors.task) {
@@ -149,23 +156,23 @@ const taskAdding = ({category}) => {
                 )}
               </div>
               <div className="flex-1">
-                <label className="block text-gray-700 mb-2">Due Time</label>
-                <div className="relative">
-                  <input
-                    type="time"
-                    value={dueTime}
-                    onChange={(e) => setDueTime(e.target.value)}
-                    className="w-full p-2 border rounded text-gray-700"
-                  />
-                  {dueTime && (
-                    <button
-                      onClick={() => setDueTime('')}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                    </button>
-                  )}
-                </div>
-              </div>
+    <label className="block text-gray-700 mb-2">
+        Due Time <span className="text-red-500">*</span>
+    </label>
+    <div className="relative">
+        <input
+            type="time"
+            value={dueTime}
+            onChange={handleTimeChange}
+            className={`w-full p-2 border rounded text-gray-700 ${
+                errors.dueTime ? 'border-red-500' : ''
+            }`}
+        />
+        {errors.dueTime && (
+            <p className="text-red-500 text-sm mt-1">{errors.dueTime}</p>
+        )}
+    </div>
+</div>
             </div>
 
             <div className="mb-4">
