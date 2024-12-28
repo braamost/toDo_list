@@ -38,7 +38,7 @@ const ContentSection = ({ title, category, messages = [] }) => {
       <div>
         <div className="flex flex-col items-center text-gray-500 font-medium text-sm justify-between space-x-2">
           <h3 className="text-2xl font-bold text-gray-800 mb-6">{title}</h3>
-          <MyTasks/>
+          <MyTasks data={category.tasks}/>
           <nav className="mt-8 space-y-2">
             <div className="min-w-full min-h-full ">
               <TaskAdding category={category}></TaskAdding>
